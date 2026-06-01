@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #030712;
+    color: #f3f4f6;
+  }
+
+  body {
+    background-color: #030712;
+    overflow-x: hidden;
+  }
+
+  /* Custom premium scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #030712;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    border: 2px solid #030712;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@layer utilities {
+  /* Premium Glassmorphism Card Style */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  /* Premium Hover Light Glow */
+  .glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(59, 130, 246, 0.2);
+    box-shadow: 
+      0 12px 40px 0 rgba(0, 0, 0, 0.5),
+      0 0 20px 2px rgba(59, 130, 246, 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Glow Text effect */
+  .text-glow-blue {
+    text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  }
+
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+  }
+
+  /* Dynamic Glow Blobs */
+  .glow-blob {
+    filter: blur(120px);
+    opacity: 0.35;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  /* Custom mask for headshot layout */
+  .founder-mask {
+    mask-image: radial-gradient(circle, black 60%, transparent 100%);
+    -webkit-mask-image: radial-gradient(circle, black 60%, transparent 100%);
+  }
+}
