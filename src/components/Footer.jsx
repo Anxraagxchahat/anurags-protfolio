@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = 2026; // Setting to 2026 based on timestamp metadata
 
   return (
-    <footer className="relative py-12 px-4 overflow-hidden border-t border-white/5 bg-[#030712]">
+    <footer className="relative py-12 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 z-10 relative">
         
         {/* Left branding */}

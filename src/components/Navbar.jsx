@@ -53,9 +53,36 @@ export default function Navbar() {
           }`}
         >
           {/* Logo Name */}
-          <a href="#home" className="flex items-center space-x-2 font-bold tracking-widest text-white group">
-            <span className="text-lg uppercase">ANURAG</span>
-            <span className="text-lg text-accentBlue group-hover:text-accentPurple transition-colors duration-300 uppercase">.VERMA</span>
+          <a href="#home" className="flex items-center space-x-3 font-bold tracking-widest text-white group">
+            <svg 
+              className="w-8 h-8 text-accentPurple filter drop-shadow-[0_0_8px_rgba(226,54,54,0.6)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12" 
+              viewBox="0 0 100 100" 
+              fill="currentColor"
+            >
+              {/* Head */}
+              <polygon points="50,22 45,28 50,34 55,28" />
+              
+              {/* Body */}
+              <polygon points="50,36 43,44 43,58 50,72 57,58 57,44" />
+              
+              {/* Front/Top Legs */}
+              <path d="M 46,38 L 30,22 L 32,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 54,38 L 70,22 L 68,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+              <path d="M 45,44 L 24,32 L 22,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 55,44 L 76,32 L 78,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+              {/* Back/Bottom Legs */}
+              <path d="M 45,54 L 22,62 L 20,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 55,54 L 78,62 L 80,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+              <path d="M 47,62 L 32,78 L 34,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M 53,62 L 68,78 L 66,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <div className="flex items-center space-x-1">
+              <span className="text-lg uppercase font-black">ANURAG</span>
+              <span className="text-lg text-accentBlue group-hover:text-accentPurple transition-colors duration-300 uppercase font-black">.VERMA</span>
+            </div>
           </a>
 
           {/* Desktop Navigation Links */}

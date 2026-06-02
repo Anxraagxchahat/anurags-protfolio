@@ -99,7 +99,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-gradient-to-b from-[#030712] to-[#040917]">
+    <section id="contact" className="relative pt-24 pb-60 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       {/* Background ambient backlights */}
       <div className="absolute top-[20%] right-[-10%] w-[380px] h-[380px] rounded-full bg-accentBlue/5 glow-blob" />
       <div className="absolute bottom-[20%] left-[-10%] w-[380px] h-[380px] rounded-full bg-accentPurple/5 glow-blob" />
@@ -269,6 +269,8 @@ export default function Contact() {
         </div>
 
       </div>
+
+
     </section>
   );
 }

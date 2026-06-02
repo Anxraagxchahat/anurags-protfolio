@@ -8,12 +8,12 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    background-color: #030712;
+    background-color: #020205;
     color: #f3f4f6;
   }
 
   body {
-    background-color: #030712;
+    background-color: #020205;
     overflow-x: hidden;
   }
 
@@ -22,12 +22,12 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #030712;
+    background: #020205;
   }
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 9999px;
-    border: 2px solid #030712;
+    border: 2px solid #020205;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.2);
@@ -60,11 +60,11 @@
 
   /* Glow Text effect */
   .text-glow-blue {
-    text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    text-shadow: 0 0 15px rgba(2, 132, 199, 0.4);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    text-shadow: 0 0 15px rgba(226, 54, 54, 0.4);
   }
 
   /* Dynamic Glow Blobs */

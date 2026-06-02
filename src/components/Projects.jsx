@@ -32,7 +32,7 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-gradient-to-b from-[#040917] to-[#030712]">
+    <section id="projects" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       {/* Background ambient lighting */}
       <div className="absolute top-[40%] right-[-10%] w-[450px] h-[450px] rounded-full bg-accentBlue/5 glow-blob" />
       <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-accentPurple/5 glow-blob" />

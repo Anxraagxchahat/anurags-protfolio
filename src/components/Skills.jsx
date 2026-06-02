@@ -115,7 +115,7 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-[#030712]">
+    <section id="skills" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       {/* Background Soft Blobs */}
       <div className="absolute top-[10%] left-[-15%] w-[400px] h-[400px] rounded-full bg-accentBlue/5 glow-blob" />
       <div className="absolute bottom-[10%] right-[-15%] w-[400px] h-[400px] rounded-full bg-accentPurple/5 glow-blob" />

@@ -52,7 +52,7 @@ export default function Journey() {
   ];
 
   return (
-    <section id="journey" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-[#030712]">
+    <section id="journey" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       {/* Background Soft Glow blobs */}
       <div className="absolute top-[40%] left-[-15%] w-[450px] h-[450px] rounded-full bg-accentPurple/5 glow-blob" />
       <div className="absolute bottom-[20%] right-[-15%] w-[400px] h-[400px] rounded-full bg-accentBlue/5 glow-blob" />

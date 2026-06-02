@@ -34,6 +34,86 @@ export default function Hero() {
       <div className="absolute top-[20%] left-[20%] w-[350px] h-[350px] rounded-full bg-accentBlue/10 glow-blob" />
       <div className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-accentPurple/10 glow-blob" />
 
+      {/* Giant Glowing Spider-Man Web behind the content */}
+      <svg 
+        className="absolute right-[-10%] top-[10%] w-[600px] h-[600px] text-accentPurple/15 pointer-events-none transform rotate-12 z-0 filter drop-shadow-[0_0_15px_rgba(226,54,54,0.15)]" 
+        viewBox="0 0 100 100" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="0.15"
+      >
+        <line x1="50" y1="50" x2="50" y2="0" />
+        <line x1="50" y1="50" x2="50" y2="100" />
+        <line x1="50" y1="50" x2="0" y2="50" />
+        <line x1="50" y1="50" x2="100" y2="50" />
+        <line x1="50" y1="50" x2="15" y2="15" />
+        <line x1="50" y1="50" x2="85" y2="85" />
+        <line x1="50" y1="50" x2="15" y2="85" />
+        <line x1="50" y1="50" x2="85" y2="15" />
+        <line x1="50" y1="50" x2="32" y2="5" />
+        <line x1="50" y1="50" x2="68" y2="95" />
+        <line x1="50" y1="50" x2="5" y2="32" />
+        <line x1="50" y1="50" x2="95" y2="68" />
+        <line x1="50" y1="50" x2="32" y2="95" />
+        <line x1="50" y1="50" x2="68" y2="5" />
+        <line x1="50" y1="50" x2="5" y2="68" />
+        <line x1="50" y1="50" x2="95" y2="32" />
+        <path d="M 50,40 Q 43,43 40,50 Q 43,57 50,60 Q 57,57 60,50 Q 57,43 50,40" />
+        <path d="M 50,30 Q 36,36 30,50 Q 36,64 50,70 Q 64,64 70,50 Q 64,36 50,30" />
+        <path d="M 50,20 Q 29,29 20,50 Q 29,71 50,80 Q 71,71 80,50 Q 71,29 50,20" />
+        <path d="M 50,10 Q 22,22 10,50 Q 22,78 50,90 Q 78,78 90,50 Q 78,22 50,10" />
+        <path d="M 50,0 Q 15,15 0,50 Q 15,85 50,100 Q 85,85 100,50 Q 85,15 50,0" />
+      </svg>
+
+      {/* Hanging Spider-Man SVG Illustration */}
+      <motion.div 
+        animate={{
+          rotate: [-1.5, 1.5, -1.5]
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        style={{ transformOrigin: "50% 0%" }}
+        className="absolute top-[68px] left-1/2 -ml-16 lg:-ml-24 w-32 lg:w-48 h-36 lg:h-56 pointer-events-none z-10 flex justify-center will-change-transform"
+      >
+        <svg 
+          className="w-full h-full text-accentPurple filter drop-shadow-[0_0_15px_rgba(226,54,54,0.6)]" 
+          viewBox="0 0 100 120"
+          fill="currentColor"
+        >
+          {/* Web thread to the navbar */}
+          <line x1="50" y1="0" x2="50" y2="15" stroke="#ffffff" strokeWidth="1.5" />
+          
+          {/* Left Arm reaching straight up to hold the web */}
+          <path d="M 50,15 L 43,35 L 47,37 L 53,17 Z" fill="#e23636" />
+          
+          {/* Torso/Chest */}
+          <path d="M 40,36 L 56,38 L 50,65 L 38,60 Z" fill="#e23636" />
+          {/* Blue chest details */}
+          <path d="M 42,42 Q 47,45 52,43 L 48,58 Q 44,57 41,55 Z" fill="#0284c7" />
+
+          {/* Left Leg (tucked up) */}
+          <path d="M 38,60 Q 25,58 28,45 Q 34,45 38,55" fill="#0284c7" />
+          {/* Right Leg (tucked up) */}
+          <path d="M 50,65 Q 62,60 58,45 Q 52,45 48,55" fill="#0284c7" />
+
+          {/* Right Arm (Reaching down, holding the web line to Gwen) */}
+          <path d="M 54,38 Q 62,48 58,74 L 50,90 L 47,84 L 52,70 Z" fill="#e23636" />
+
+          {/* Head (Upside down / looking down at Gwen) */}
+          <ellipse cx="44" cy="70" rx="9" ry="11" fill="#e23636" />
+          
+          {/* Left Mask Eye */}
+          <path d="M 42,66 Q 37,68 38,73 Q 42,74 44,70 Z" fill="#ffffff" stroke="#000000" strokeWidth="0.8" />
+          {/* Right Mask Eye */}
+          <path d="M 46,67 Q 49,69 47,74 Q 44,73 43,70 Z" fill="#ffffff" stroke="#000000" strokeWidth="0.8" />
+
+          {/* Web rope held in right hand going down to Gwen */}
+          <line x1="50" y1="90" x2="50" y2="120" stroke="#ffffff" strokeWidth="1.5" />
+        </svg>
+      </motion.div>
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
         
         {/* Left Column: Text & Content */}
@@ -49,10 +129,10 @@ export default function Hero() {
             className="flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-card border-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.2)] text-xs font-semibold tracking-wider text-accentBlue-light"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accentBlue opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accentBlue"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accentPurple opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accentPurple"></span>
             </span>
-            <span>FOUNDER @ OPPORTUNITYX 🚀</span>
+            <span>FOUNDER @ OPPORTUNITYX 🕷️</span>
           </motion.div>
 
           {/* Headline Typography */}

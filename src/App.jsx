@@ -10,6 +10,8 @@ import Projects from './components/Projects';
 import Journey from './components/Journey';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import WebStrand from './components/WebStrand';
+import CustomCursor from './components/CustomCursor';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -34,12 +36,18 @@ export default function App() {
           transition={{ duration: 1, ease: 'easeOut' }}
           className="relative min-h-screen text-gray-100 selection:bg-accentBlue/30 selection:text-white"
         >
+          {/* Custom Web-slinging Mouse Cursor */}
+          <CustomCursor />
+
           {/* Header/Navbar */}
           <Navbar />
 
           {/* Individual Sections */}
           <main className="w-full relative z-10 flex flex-col">
             
+            {/* Connecting Spidey Web Strand */}
+            <WebStrand />
+
             {/* Hero Section */}
             <Hero />
 

@@ -48,7 +48,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-gradient-to-b from-[#030712] to-[#040917]">
+    <section id="about" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-transparent">
       {/* Background Soft Blobs */}
       <div className="absolute top-[30%] right-[-10%] w-[350px] h-[350px] rounded-full bg-accentPurple/5 glow-blob" />
       <div className="absolute bottom-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-accentBlue/5 glow-blob" />

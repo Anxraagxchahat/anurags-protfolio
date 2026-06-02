@@ -39,18 +39,49 @@ export default function Loader({ onComplete }) {
         y: "-100%",
         transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] }
       }}
-      className="fixed inset-0 z-50 flex flex-col justify-center items-center bg-[#030712] overflow-hidden"
+      className="fixed inset-0 z-50 flex flex-col justify-center items-center bg-[#020205] overflow-hidden"
     >
       {/* Background ambient light */}
-      <div className="absolute w-[500px] h-[500px] bg-accentBlue/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute w-[500px] h-[500px] bg-accentPurple/10 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Decorative premium border glow */}
       <motion.div 
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accentBlue to-transparent shadow-[0_0_15px_rgba(59,130,246,0.8)]"
+        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accentPurple to-transparent shadow-[0_0_15px_rgba(226,54,54,0.8)]"
       />
+
+      {/* Glowing Spider-Man Emblem */}
+      <motion.div
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="mb-6 relative"
+      >
+        <div className="absolute -inset-4 rounded-full bg-accentPurple/10 filter blur-xl animate-pulse" />
+        <svg className="w-16 h-16 text-accentPurple relative z-10 filter drop-shadow-[0_0_12px_rgba(226,54,54,0.7)]" viewBox="0 0 100 100" fill="currentColor">
+          {/* Head */}
+          <polygon points="50,22 45,28 50,34 55,28" />
+          
+          {/* Body */}
+          <polygon points="50,36 43,44 43,58 50,72 57,58 57,44" />
+          
+          {/* Front/Top Legs */}
+          <path d="M 46,38 L 30,22 L 32,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 54,38 L 70,22 L 68,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+          <path d="M 45,44 L 24,32 L 22,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 55,44 L 76,32 L 78,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* Back/Bottom Legs */}
+          <path d="M 45,54 L 22,62 L 20,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 55,54 L 78,62 L 80,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+
+          <path d="M 47,62 L 32,78 L 34,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M 53,62 L 68,78 L 66,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </motion.div>
 
       <motion.div
         variants={containerVariants}
