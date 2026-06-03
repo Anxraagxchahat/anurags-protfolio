@@ -30,8 +30,8 @@ export default function Journey() {
     },
     {
       year: "FEB 2026",
-      title: "Exploring AI/ML Ingestion",
-      desc: "Delved into machine learning patterns. Experimented with embeddings search, LLM integrations, and custom python model runners.",
+      title: "Exploring AI/ML & Digitalizing Retail",
+      desc: "Built Ms Verma Kirana Store using Lovable to digitalize a local business storefront. Also delved into machine learning patterns, experiments with embeddings search, and custom python model runners.",
       icon: <Cpu className="w-5 h-5 text-accentPurple" />,
       accentClass: "from-accentPurple to-accentPurple-light"
     },
@@ -48,6 +48,13 @@ export default function Journey() {
       desc: "Designed and launched OpportunityX—a platform serving students looking for career opportunities. Configured and deployed microservices in record speed.",
       icon: <Rocket className="w-5 h-5 text-emerald-400" />,
       accentClass: "from-emerald-400 to-emerald-300"
+    },
+    {
+      year: "JUN 2026",
+      title: "Cinematic Portfolio Canvas",
+      desc: "Designed and engineered this premium, highly interactive portfolio featuring custom Spider-Man web physics, 3D card tilts, and sleek glassmorphism to showcase all creative works.",
+      icon: <Globe className="w-5 h-5 text-accentBlue" />,
+      accentClass: "from-accentBlue to-accentBlue-light"
     }
   ];
 

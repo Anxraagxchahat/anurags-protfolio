@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowDown, Layers, Terminal, Sparkles, CheckCircle } from 'lucide-react';
+import { ArrowDown, Layers, Terminal, Sparkles, CheckCircle, Code } from 'lucide-react';
 
 export default function Hero() {
   const targetRotation = useMotionValue(0);
@@ -136,8 +136,8 @@ export default function Hero() {
   };
 
   const stats = [
-    { value: "2026", label: "Started Coding", icon: <Terminal className="w-4 h-4 text-accentBlue" /> },
     { value: "1", label: "Startup Building", icon: <Layers className="w-4 h-4 text-accentPurple" /> },
+    { value: "3", label: "Projects Built", icon: <Code className="w-4 h-4 text-accentBlue-light" /> },
     { value: "AI/ML", label: "+ Full Stack", icon: <Sparkles className="w-4 h-4 text-amber-400" /> },
     { value: "Live", label: "Real Product Live", icon: <CheckCircle className="w-4 h-4 text-emerald-400" /> }
   ];
@@ -354,7 +354,7 @@ export default function Hero() {
               Explore Projects
             </a>
             <a 
-              href="https://opportunityx-8njs.vercel.app/"
+              href="https://opportunity-x.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 glass-card hover:bg-white/[0.08] hover:border-white/20 text-white font-semibold text-sm rounded-full transition-all duration-300 text-center border-white/10 tracking-wider uppercase"
