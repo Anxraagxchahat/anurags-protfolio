@@ -1,18 +1,60 @@
-import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function WebStrand() {
+  const targetRotation = useMotionValue(0);
+  // WebStrand is longer, so it swings with slightly lower stiffness (more flex/lag) and damping
+  const rotationSpring = useSpring(targetRotation, { damping: 14, stiffness: 35 });
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let lastTime = performance.now();
+    let animFrame;
+    let angle = 0;
+    let scrollDisplacement = 0;
+
+    const updatePhysics = () => {
+      // Natural slow swing (sin wave) - slightly out of phase with Spider-Man for realistic double-pendulum feel!
+      angle += 0.01; // slower natural swing
+      const naturalSwing = Math.sin(angle + 0.5) * 1.5; 
+      
+      // Target rotation is natural swing + scroll displacement
+      targetRotation.set(naturalSwing + scrollDisplacement);
+      
+      // Decay scroll displacement back to 0
+      scrollDisplacement *= 0.93;
+      
+      animFrame = requestAnimationFrame(updatePhysics);
+    };
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const currentTime = performance.now();
+      const dt = currentTime - lastTime;
+      if (dt > 0) {
+        const dy = currentScrollY - lastScrollY;
+        const velocity = dy / dt;
+        // Web strand reacts to scroll velocity (inertia)
+        scrollDisplacement += velocity * 7.5; 
+        scrollDisplacement = Math.max(-16, Math.min(16, scrollDisplacement));
+      }
+      lastScrollY = currentScrollY;
+      lastTime = currentTime;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    animFrame = requestAnimationFrame(updatePhysics);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(animFrame);
+    };
+  }, [targetRotation]);
+
   return (
     <motion.div 
-      animate={{
-        rotate: [-1.5, 1.5, -1.5]
-      }}
-      transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
-      style={{ transformOrigin: "50% -107px" }} // Align pivot with Spider-Man's navbar anchor at top-[68px]
-      className="absolute left-1/2 -ml-3 top-[175px] bottom-[310px] w-6 pointer-events-none z-0 opacity-40 will-change-transform"
+      style={{ rotate: rotationSpring, transformOrigin: "50% -107px" }} // Align pivot with Spider-Man's navbar anchor at top-[68px]
+      className="absolute left-1/2 -ml-3 top-[175px] bottom-[80px] w-6 pointer-events-none z-0 opacity-40 will-change-transform"
     >
       {/* Web Line (Subtle opacity) */}
       <svg className="w-full h-full opacity-35" preserveAspectRatio="none" viewBox="0 0 20 100">

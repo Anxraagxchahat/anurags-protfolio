@@ -12,11 +12,11 @@ export default function About() {
   };
 
   const itemVariants = {
-    initial: { y: 30, opacity: 0 },
+    initial: { y: 35, opacity: 0 },
     animate: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { type: "spring", damping: 22, stiffness: 70, mass: 0.8 }
     }
   };
 
@@ -68,10 +68,10 @@ export default function About() {
           
           {/* Left Side: Biography Card */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ type: "spring", damping: 24, stiffness: 60, mass: 0.9 }}
             className="lg:col-span-5 flex flex-col space-y-6 text-left"
           >
             <div className="glass-card rounded-3xl p-8 border-white/5 space-y-6 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">

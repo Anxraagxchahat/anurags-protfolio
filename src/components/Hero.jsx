@@ -1,7 +1,121 @@
-import { motion } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowDown, Layers, Terminal, Sparkles, CheckCircle } from 'lucide-react';
 
 export default function Hero() {
+  const targetRotation = useMotionValue(0);
+  const rotationSpring = useSpring(targetRotation, { damping: 12, stiffness: 45 }); // pendulum sway spring
+  const impulseRef = useRef(0);
+  const heroRef = useRef(null);
+
+  const [isSpideyHovered, setIsSpideyHovered] = useState(false);
+  const [isBlinking, setIsBlinking] = useState(false);
+  const [webShots, setWebShots] = useState([]);
+  const [spinActive, setSpinActive] = useState(false);
+
+  useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      setIsBlinking(true);
+      setTimeout(() => setIsBlinking(false), 150);
+    }, 4500 + Math.random() * 3000);
+    return () => clearInterval(blinkInterval);
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let lastTime = performance.now();
+    let animFrame;
+    let angle = 0;
+    let scrollDisplacement = 0;
+
+    const updatePhysics = () => {
+      // Natural slow swing (sin wave)
+      angle += 0.012;
+      const naturalSwing = Math.sin(angle) * 1.5; // 1.5 degrees amplitude
+      
+      // Decay impulse back to 0
+      impulseRef.current *= 0.94;
+      
+      // Target rotation is natural swing + scroll displacement + impulse
+      targetRotation.set(naturalSwing + scrollDisplacement + impulseRef.current);
+      
+      // Decay scroll displacement back to 0
+      scrollDisplacement *= 0.92;
+      
+      animFrame = requestAnimationFrame(updatePhysics);
+    };
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const currentTime = performance.now();
+      const dt = currentTime - lastTime;
+      if (dt > 0) {
+        const dy = currentScrollY - lastScrollY;
+        const velocity = dy / dt;
+        // Scroll inertia: moving down rotates him positive, moving up rotates him negative
+        scrollDisplacement += velocity * 6.5; 
+        scrollDisplacement = Math.max(-14, Math.min(14, scrollDisplacement));
+      }
+      lastScrollY = currentScrollY;
+      lastTime = currentTime;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    animFrame = requestAnimationFrame(updatePhysics);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(animFrame);
+    };
+  }, [targetRotation]);
+
+  const handleHeroClick = (e) => {
+    // If clicking on buttons, links or their children, don't shoot web
+    if (e.target.closest('a') || e.target.closest('button') || e.target.closest('span')) return;
+
+    const spideyElement = document.getElementById('spidey-hanging-container');
+    if (!spideyElement) return;
+    const spideyRect = spideyElement.getBoundingClientRect();
+
+    // Click coordinate relative to Spider-Man's container:
+    const relativeX = e.clientX - spideyRect.left;
+    const relativeY = e.clientY - spideyRect.top;
+
+    // Convert relative coordinates to SVG viewBox coords (0 to 100, 0 to 120)
+    const viewBoxX = (relativeX / spideyRect.width) * 100;
+    const viewBoxY = (relativeY / spideyRect.height) * 120;
+
+    // Create a new web shot
+    const newShot = {
+      id: Math.random(),
+      x: viewBoxX,
+      y: viewBoxY
+    };
+
+    setWebShots((prev) => [...prev, newShot]);
+
+    // Apply recoil physics!
+    // If click is to the left (viewBoxX < 50), push him to the right (positive impulse)
+    // If click is to the right, push him to the left (negative impulse)
+    const dx = viewBoxX - 50;
+    const dy = viewBoxY - 90;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    if (distance > 10) {
+      // Recoil force is proportional to the distance of click
+      const forceScale = Math.min(15, distance * 0.08);
+      const direction = dx > 0 ? -1 : 1;
+      impulseRef.current += direction * forceScale;
+      // Cap impulse
+      impulseRef.current = Math.max(-25, Math.min(25, impulseRef.current));
+    }
+
+    // Clean up shot after animation
+    setTimeout(() => {
+      setWebShots((prev) => prev.filter((shot) => shot.id !== newShot.id));
+    }, 450);
+  };
+
   const containerVariants = {
     initial: {},
     animate: {
@@ -13,11 +127,11 @@ export default function Hero() {
   };
 
   const fadeUpVariants = {
-    initial: { y: 30, opacity: 0 },
+    initial: { y: 40, opacity: 0 },
     animate: { 
       y: 0, 
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+      transition: { type: "spring", damping: 20, stiffness: 60, mass: 0.8 }
     }
   };
 
@@ -29,7 +143,12 @@ export default function Hero() {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 overflow-hidden">
+    <section 
+      id="home" 
+      ref={heroRef}
+      onClick={handleHeroClick}
+      className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 overflow-hidden select-none"
+    >
       {/* Background soft backlights */}
       <div className="absolute top-[20%] left-[20%] w-[350px] h-[350px] rounded-full bg-accentBlue/10 glow-blob" />
       <div className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-accentPurple/10 glow-blob" />
@@ -67,21 +186,26 @@ export default function Hero() {
 
       {/* Hanging Spider-Man SVG Illustration */}
       <motion.div 
-        animate={{
-          rotate: [-1.5, 1.5, -1.5]
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-        style={{ transformOrigin: "50% 0%" }}
-        className="absolute top-[68px] left-1/2 -ml-16 lg:-ml-24 w-32 lg:w-48 h-36 lg:h-56 pointer-events-none z-10 flex justify-center will-change-transform"
+        id="spidey-hanging-container"
+        onMouseEnter={() => setIsSpideyHovered(true)}
+        onMouseLeave={() => setIsSpideyHovered(false)}
+        style={{ rotate: rotationSpring, transformOrigin: "50% 0%" }}
+        className="absolute top-[68px] left-1/2 -ml-16 lg:-ml-24 w-32 lg:w-48 h-36 lg:h-56 pointer-events-auto z-20 flex justify-center will-change-transform cursor-pointer"
+        whileHover={{ y: 8, scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
-        <svg 
+        <motion.svg 
           className="w-full h-full text-accentPurple filter drop-shadow-[0_0_15px_rgba(226,54,54,0.6)]" 
           viewBox="0 0 100 120"
           fill="currentColor"
+          animate={spinActive ? { rotate: 360 } : { rotate: 0 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          onAnimationComplete={() => setSpinActive(false)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setSpinActive(true);
+            impulseRef.current = (Math.random() > 0.5 ? 20 : -20);
+          }}
         >
           {/* Web thread to the navbar */}
           <line x1="50" y1="0" x2="50" y2="15" stroke="#ffffff" strokeWidth="1.5" />
@@ -106,13 +230,70 @@ export default function Hero() {
           <ellipse cx="44" cy="70" rx="9" ry="11" fill="#e23636" />
           
           {/* Left Mask Eye */}
-          <path d="M 42,66 Q 37,68 38,73 Q 42,74 44,70 Z" fill="#ffffff" stroke="#000000" strokeWidth="0.8" />
+          <motion.path 
+            d="M 42,66 Q 37,68 38,73 Q 42,74 44,70 Z" 
+            fill="#ffffff" 
+            stroke="#000000" 
+            strokeWidth="0.8" 
+            animate={{
+              scaleY: isBlinking ? 0.08 : (isSpideyHovered ? 0.55 : 1),
+            }}
+            style={{ transformOrigin: "41px 70px" }}
+            transition={{ duration: 0.08 }}
+          />
           {/* Right Mask Eye */}
-          <path d="M 46,67 Q 49,69 47,74 Q 44,73 43,70 Z" fill="#ffffff" stroke="#000000" strokeWidth="0.8" />
+          <motion.path 
+            d="M 46,67 Q 49,69 47,74 Q 44,73 43,70 Z" 
+            fill="#ffffff" 
+            stroke="#000000" 
+            strokeWidth="0.8" 
+            animate={{
+              scaleY: isBlinking ? 0.08 : (isSpideyHovered ? 0.55 : 1),
+            }}
+            style={{ transformOrigin: "45px 70px" }}
+            transition={{ duration: 0.08 }}
+          />
 
           {/* Web rope held in right hand going down to Gwen */}
           <line x1="50" y1="90" x2="50" y2="120" stroke="#ffffff" strokeWidth="1.5" />
-        </svg>
+
+          {/* Active Web Shots */}
+          {webShots.map((shot) => (
+            <g key={shot.id}>
+              <motion.path
+                initial={{ pathLength: 0, opacity: 1 }}
+                animate={{ pathLength: 1, opacity: [1, 1, 0] }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
+                d={`M 50,90 L ${shot.x} ${shot.y}`}
+                stroke="#ffffff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                filter="drop-shadow(0 0 6px rgba(255,255,255,0.8))"
+                fill="none"
+              />
+              <motion.circle
+                cx={shot.x}
+                cy={shot.y}
+                initial={{ r: 0, opacity: 1 }}
+                animate={{ r: [0, 8, 12], opacity: [1, 0.8, 0] }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                stroke="#ffffff"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              <motion.path
+                initial={{ scale: 0, opacity: 1 }}
+                animate={{ scale: [0, 1.2, 1.5], opacity: [1, 0.7, 0] }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                style={{ transformOrigin: `${shot.x}px ${shot.y}px` }}
+                d={`M ${shot.x - 8} ${shot.y} L ${shot.x + 8} ${shot.y} M ${shot.x} ${shot.y - 8} L ${shot.x} ${shot.y + 8} M ${shot.x - 6} ${shot.y - 6} L ${shot.x + 6} ${shot.y + 6} M ${shot.x - 6} ${shot.y + 6} L ${shot.x + 6} ${shot.y - 6}`}
+                stroke="#ffffff"
+                strokeWidth="1"
+                fill="none"
+              />
+            </g>
+          ))}
+        </motion.svg>
       </motion.div>
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
         
@@ -205,9 +386,9 @@ export default function Hero() {
 
         {/* Right Column: Premium Founder Portrait */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1 }}
+          transition={{ type: "spring", damping: 20, stiffness: 50, delay: 0.9 }}
           className="lg:col-span-5 flex justify-center items-center relative"
         >
           {/* Accent light rings behind the portrait */}

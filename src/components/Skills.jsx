@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { 
   Terminal, 
   Layers, 
@@ -140,56 +140,93 @@ export default function Skills() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {skills.map((skill, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              animate={{
-                y: [0, -6, 0]
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: skill.floatDelay
-              }}
-              style={{
-                "--glow-color": skill.glowColor
-              }}
-              className="group relative rounded-2xl glass-card border-white/5 p-6 flex flex-col text-left space-y-4 hover:bg-white/[0.04] hover:border-white/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md"
-            >
-              {/* Dynamic light accent behind the card */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at 10% 10%, ${skill.glowColor}, transparent 50%)`
-                }}
-              />
-
-              <div className="flex items-center justify-between">
-                <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 group-hover:bg-white/[0.06] transition-colors">
-                  {skill.icon}
-                </div>
-                <span className="text-[10px] font-bold tracking-wider text-accentPurple-light bg-accentPurple/10 border border-accentPurple/25 px-2.5 py-1 rounded-full uppercase">
-                  {skill.category}
-                </span>
-              </div>
-
-              <div className="space-y-1">
-                <h4 className="text-lg font-bold text-white group-hover:text-accentBlue-light transition-colors">
-                  {skill.name}
-                </h4>
-                <p className="text-xs text-gray-400 font-light leading-relaxed">
-                  {skill.desc}
-                </p>
-              </div>
-
-              {/* Decorative premium line */}
-              <div className="h-[1px] w-0 bg-gradient-to-r from-accentBlue to-accentPurple group-hover:w-full transition-all duration-500 ease-out" />
-            </motion.div>
+            <SkillCard key={index} skill={skill} variants={itemVariants} />
           ))}
         </motion.div>
 
       </div>
     </section>
+  );
+}
+
+function SkillCard({ skill, variants }) {
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  const tiltSpringConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(useTransform(y, [0, 1], [8, -8]), tiltSpringConfig);
+  const rotateY = useSpring(useTransform(x, [0, 1], [-8, 8]), tiltSpringConfig);
+
+  const glowX = useSpring(useTransform(x, [0, 1], ["0%", "100%"]), tiltSpringConfig);
+  const glowY = useSpring(useTransform(y, [0, 1], ["0%", "100%"]), tiltSpringConfig);
+  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, ${skill.glowColor}, transparent 55%)`;
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width);
+    y.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  return (
+    <motion.div
+      variants={variants}
+      className="w-full h-full"
+    >
+      <motion.div
+        animate={{
+          y: [0, -6, 0]
+        }}
+        transition={{
+          duration: 5,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: skill.floatDelay
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          transformPerspective: 800,
+          "--glow-color": skill.glowColor
+        }}
+        className="group relative rounded-2xl glass-card border-white/5 p-6 flex flex-col text-left space-y-4 hover:bg-white/[0.04] hover:border-white/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md h-full cursor-pointer select-none"
+      >
+        {/* Dynamic mouse-following light accent behind the card */}
+        <motion.div 
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: glowBg
+          }}
+        />
+
+        <div className="flex items-center justify-between" style={{ transform: "translateZ(30px)" }}>
+          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 group-hover:bg-white/[0.06] transition-colors">
+            {skill.icon}
+          </div>
+          <span className="text-[10px] font-bold tracking-wider text-accentPurple-light bg-accentPurple/10 border border-accentPurple/25 px-2.5 py-1 rounded-full uppercase">
+            {skill.category}
+          </span>
+        </div>
+
+        <div className="space-y-1" style={{ transform: "translateZ(20px)" }}>
+          <h4 className="text-lg font-bold text-white group-hover:text-accentBlue-light transition-colors">
+            {skill.name}
+          </h4>
+          <p className="text-xs text-gray-400 font-light leading-relaxed">
+            {skill.desc}
+          </p>
+        </div>
+
+        {/* Decorative premium line */}
+        <div className="h-[1px] w-0 bg-gradient-to-r from-accentBlue to-accentPurple group-hover:w-full transition-all duration-500 ease-out" />
+      </motion.div>
+    </motion.div>
   );
 }

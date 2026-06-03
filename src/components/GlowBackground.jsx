@@ -43,28 +43,39 @@ export default function GlowBackground() {
     const particles = [];
 
     for (let i = 0; i < particleCount; i++) {
+      const px = Math.random() * width;
+      const py = Math.random() * height;
       particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        x: px,
+        y: py,
+        vx: 0,
+        vy: 0,
+        homeX: px,
+        homeY: py,
+        homeVx: (Math.random() - 0.5) * 0.2, // slow organic anchor drift velocity
+        homeVy: (Math.random() - 0.5) * 0.2,
         radius: Math.random() * 1.5 + 1,
         // Crimson Red (#e23636) or Electric Blue (#0284c7)
         color: Math.random() > 0.55 ? '#e23636' : '#0284c7'
       });
     }
 
-    // Mouse tracking for canvas interaction
+    // Mouse tracking for canvas interaction (interpolated targets)
+    let targetMouse = { x: null, y: null };
     let canvasMouse = { x: null, y: null, radius: 180 };
     
     const handleMouseMoveCanvas = (e) => {
-      canvasMouse.x = e.clientX;
-      canvasMouse.y = e.clientY;
+      if (canvasMouse.x === null || canvasMouse.y === null) {
+        canvasMouse.x = e.clientX;
+        canvasMouse.y = e.clientY;
+      }
+      targetMouse.x = e.clientX;
+      targetMouse.y = e.clientY;
     };
 
     const handleMouseLeaveCanvas = () => {
-      canvasMouse.x = null;
-      canvasMouse.y = null;
+      targetMouse.x = null;
+      targetMouse.y = null;
     };
 
     window.addEventListener('mousemove', handleMouseMoveCanvas);
@@ -114,6 +125,20 @@ export default function GlowBackground() {
     };
 
     const draw = () => {
+      // Smoothly interpolate canvas mouse position towards target
+      if (targetMouse.x !== null && targetMouse.y !== null) {
+        if (canvasMouse.x === null || canvasMouse.y === null) {
+          canvasMouse.x = targetMouse.x;
+          canvasMouse.y = targetMouse.y;
+        } else {
+          canvasMouse.x += (targetMouse.x - canvasMouse.x) * 0.08;
+          canvasMouse.y += (targetMouse.y - canvasMouse.y) * 0.08;
+        }
+      } else {
+        canvasMouse.x = null;
+        canvasMouse.y = null;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       // 1. Draw static elegant corner spider webs
@@ -123,26 +148,42 @@ export default function GlowBackground() {
       drawCornerWeb(0, height, webRadius, 1.5 * Math.PI, 2 * Math.PI); // Bottom Left
       drawCornerWeb(width, height, webRadius, Math.PI, 1.5 * Math.PI); // Bottom Right
 
-      // 2. Draw drifting particle nodes
+      // 2. Draw drifting particle nodes using spring-mass physics
       particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
+        // Slow drift of anchor coordinates
+        p.homeX += p.homeVx;
+        p.homeY += p.homeVy;
 
-        // Bounce boundaries
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
+        // Bounce anchors off screen boundaries
+        if (p.homeX < 0 || p.homeX > width) p.homeVx *= -1;
+        if (p.homeY < 0 || p.homeY > height) p.homeVy *= -1;
 
-        // Attract slightly to mouse
+        // Interactive mouse attraction/grab force
         if (canvasMouse.x !== null && canvasMouse.y !== null) {
           const dx = canvasMouse.x - p.x;
           const dy = canvasMouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < canvasMouse.radius) {
             const force = (canvasMouse.radius - dist) / canvasMouse.radius;
-            p.x += (dx / dist) * force * 0.3;
-            p.y += (dy / dist) * force * 0.3;
+            // pull particles towards mouse with elastic spring acceleration
+            p.vx += (dx / dist) * force * 0.8;
+            p.vy += (dy / dist) * force * 0.8;
           }
         }
+
+        // Hooke's Law: Spring force back to drifting anchor home
+        const dxHome = p.homeX - p.x;
+        const dyHome = p.homeY - p.y;
+        p.vx += dxHome * 0.03; // stiffness
+        p.vy += dyHome * 0.03;
+
+        // Friction damping (decays oscillation)
+        p.vx *= 0.88;
+        p.vy *= 0.88;
+
+        // Update positions
+        p.x += p.vx;
+        p.y += p.vy;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);

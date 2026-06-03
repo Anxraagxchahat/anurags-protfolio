@@ -1,8 +1,31 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
 import { ExternalLink, Layers, Search, Sparkles, Terminal, Calendar, Award, Code } from 'lucide-react';
 
 export default function Projects() {
   const techStack = ["React", "FastAPI", "Firebase", "Vercel", "Render"];
+
+  // 3D tilt states and spring configurations
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  const tiltSpringConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(useTransform(y, [0, 1], [6, -6]), tiltSpringConfig);
+  const rotateY = useSpring(useTransform(x, [0, 1], [-6, 6]), tiltSpringConfig);
+
+  const glowX = useSpring(useTransform(x, [0, 1], ["0%", "100%"]), tiltSpringConfig);
+  const glowY = useSpring(useTransform(y, [0, 1], ["0%", "100%"]), tiltSpringConfig);
+  const glowBg = useMotionTemplate`radial-gradient(circle at ${glowX} ${glowY}, rgba(59, 130, 246, 0.12), transparent 60%)`;
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width);
+    y.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
 
   const mockupOpportunities = [
     {
@@ -49,15 +72,31 @@ export default function Projects() {
         </div>
 
         {/* Premium Spotlight Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full rounded-3xl glass-card border-white/10 p-6 md:p-10 flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 hover:border-accentBlue/25 transition-colors duration-500 shadow-[0_30px_60px_rgba(0,0,0,0.5)] group overflow-hidden"
-        >
-          {/* Subtle slow drift glowing accent in the card */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-tr from-accentBlue/10 to-accentPurple/10 rounded-full blur-[100px] pointer-events-none group-hover:scale-110 transition-transform duration-700" />
+        <div className="w-full" style={{ perspective: 1000 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: "preserve-3d",
+              transformPerspective: 1000
+            }}
+            className="relative w-full rounded-3xl glass-card border-white/10 p-6 md:p-10 flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 hover:border-accentBlue/25 transition-colors duration-500 shadow-[0_30px_60px_rgba(0,0,0,0.5)] group overflow-hidden cursor-pointer select-none"
+          >
+            {/* Dynamic mouse-following radial gradient glow */}
+            <motion.div 
+              className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{
+                background: glowBg
+              }}
+            />
+            {/* Subtle slow drift glowing accent in the card */}
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-tr from-accentBlue/10 to-accentPurple/10 rounded-full blur-[100px] pointer-events-none group-hover:scale-110 transition-transform duration-700" />
 
           {/* Left: Product Info & Core Value proposition */}
           <div className="lg:col-span-6 flex flex-col text-left justify-center space-y-6">
@@ -199,6 +238,7 @@ export default function Projects() {
           </div>
 
         </motion.div>
+      </div>
 
       </div>
     </section>
