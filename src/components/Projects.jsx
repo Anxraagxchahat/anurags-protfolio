@@ -80,7 +80,7 @@ function ProjectCard({ project }) {
           </p>
 
           {/* Structured Feature Tags */}
-          <div className="grid grid-cols-2 gap-3 pb-2 text-xs text-gray-300 font-medium">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 text-xs text-gray-300 font-medium">
             {project.features.map((feature, idx) => (
               <div key={idx} className="flex items-center space-x-2 p-2 rounded-xl bg-white/[0.02] border border-white/5">
                 <span className={`w-1.5 h-1.5 rounded-full ${feature.color}`} />

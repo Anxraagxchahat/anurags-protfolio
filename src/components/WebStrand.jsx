@@ -54,7 +54,7 @@ export default function WebStrand() {
   return (
     <motion.div 
       style={{ rotate: rotationSpring, transformOrigin: "50% -107px" }} // Align pivot with Spider-Man's navbar anchor at top-[68px]
-      className="absolute left-1/2 -ml-3 top-[175px] bottom-[80px] w-6 pointer-events-none z-0 opacity-40 will-change-transform"
+      className="absolute left-1/2 -ml-3 top-[175px] bottom-[80px] w-6 pointer-events-none z-0 opacity-40 will-change-transform hidden lg:block"
     >
       {/* Web Line (Subtle opacity) */}
       <svg className="w-full h-full opacity-35" preserveAspectRatio="none" viewBox="0 0 20 100">

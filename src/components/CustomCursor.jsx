@@ -20,9 +20,15 @@ export default function CustomCursor() {
   const trailY = useSpring(cursorY, trailSpringConfig);
 
   useEffect(() => {
-    // Only enable custom cursor on fine pointer devices (desktop with mouse)
-    const mediaQuery = window.matchMedia('(pointer: fine)');
-    if (!mediaQuery.matches) return;
+    // Only enable custom cursor on fine pointer devices, non-touch devices, and screens >= 768px
+    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    const isMobileViewport = window.innerWidth < 768;
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+    if (isTouchDevice || isMobileViewport || !isFinePointer) {
+      setIsVisible(false);
+      return;
+    }
 
     setIsVisible(true);
 

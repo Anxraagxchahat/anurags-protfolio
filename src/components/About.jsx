@@ -131,11 +131,11 @@ export default function About() {
                   {point.icon}
                 </div>
                 <div className="text-left space-y-1">
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between items-start gap-2">
                     <h4 className="text-base font-bold text-white group-hover:text-accentBlue-light transition-colors">
                       {point.title}
                     </h4>
-                    <span className="text-xs font-semibold text-accentBlue-light/80 px-2 py-0.5 rounded-full bg-accentBlue/10 border border-accentBlue/20 uppercase tracking-widest">
+                    <span className="text-xs font-semibold text-accentBlue-light/80 px-2.5 py-0.5 rounded-full bg-accentBlue/10 border border-accentBlue/20 uppercase tracking-widest shrink-0">
                       {point.date}
                     </span>
                   </div>

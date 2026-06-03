@@ -190,7 +190,7 @@ export default function Hero() {
         onMouseEnter={() => setIsSpideyHovered(true)}
         onMouseLeave={() => setIsSpideyHovered(false)}
         style={{ rotate: rotationSpring, transformOrigin: "50% 0%" }}
-        className="absolute top-[68px] left-1/2 -ml-16 lg:-ml-24 w-32 lg:w-48 h-36 lg:h-56 pointer-events-auto z-20 flex justify-center will-change-transform cursor-pointer"
+        className="absolute top-[68px] left-1/2 -ml-16 lg:-ml-24 w-32 lg:w-48 h-36 lg:h-56 pointer-events-auto z-20 hidden lg:flex justify-center will-change-transform cursor-pointer"
         whileHover={{ y: 8, scale: 1.05 }}
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
