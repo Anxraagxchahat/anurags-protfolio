@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, Cpu, Globe, Rocket, HelpCircle } from 'lucide-react';
+import { Calendar, Cpu, Globe, Rocket, HelpCircle, MessageSquare } from 'lucide-react';
 
 export default function Journey() {
   const containerVariants = {
@@ -13,8 +13,8 @@ export default function Journey() {
 
   const itemVariants = {
     initial: { x: -30, opacity: 0 },
-    animate: { 
-      x: 0, 
+    animate: {
+      x: 0,
       opacity: 1,
       transition: { type: "spring", damping: 22, stiffness: 85 }
     }
@@ -55,6 +55,13 @@ export default function Journey() {
       desc: "Designed and engineered this premium, highly interactive portfolio featuring custom 3D card tilts, dynamic particle systems, and sleek glassmorphism to showcase all creative works.",
       icon: <Globe className="w-5 h-5 text-accentBlue" />,
       accentClass: "from-accentBlue to-accentBlue-light"
+    },
+    {
+      year: "JUN-JULY 2026",
+      title: "Real-Time Collaboration: Voxtro",
+      desc: "Architected and built Voxtro, a high-fidelity real-time collaboration platform featuring secure E2EE chat channels, WebRTC voice/video rooms, and cross-platform Capacitor mobile integration.",
+      icon: <MessageSquare className="w-5 h-5 text-accentPurple" />,
+      accentClass: "from-accentPurple to-accentPurple-light"
     }
   ];
 
@@ -65,7 +72,7 @@ export default function Journey() {
       <div className="absolute bottom-[20%] right-[-15%] w-[400px] h-[400px] rounded-full bg-accentBlue/5 glow-blob" />
 
       <div className="w-full max-w-4xl mx-auto z-10">
-        
+
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-20">
           <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-2">MILESTONES</span>
@@ -77,7 +84,7 @@ export default function Journey() {
 
         {/* Timeline Path container */}
         <div className="relative pl-6 md:pl-10 text-left">
-          
+
           {/* Vertical Glowing Line */}
           <div className="absolute left-[29px] top-4 bottom-4 w-[2px] bg-gradient-to-b from-accentBlue via-accentPurple to-accentPurple-dark shadow-[0_0_10px_rgba(59,130,246,0.3)] opacity-60" />
 
@@ -90,12 +97,12 @@ export default function Journey() {
             className="flex flex-col space-y-12"
           >
             {milestones.map((ms, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 variants={itemVariants}
                 className="relative flex flex-col md:flex-row md:items-start gap-4 md:gap-8 group"
               >
-                
+
                 {/* Node Icon Circle */}
                 <div className="absolute -left-[35px] md:-left-[39px] top-1 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-darkBg border-2 border-accentPurple group-hover:border-accentBlue shadow-[0_0_10px_rgba(168,85,247,0.3)] transition-colors duration-300">
                   <div className="p-1 rounded-full bg-white/[0.03]">

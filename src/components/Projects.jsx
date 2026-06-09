@@ -264,8 +264,8 @@ export default function Projects() {
         { label: "Express & Socket.io Backend", color: "bg-emerald-400" }
       ],
       techStack: ["React", "TypeScript", "TailwindCSS", "Socket.io", "WebRTC", "Firebase", "Capacitor", "Node.js"],
-      link: "https://voxtr0.vercel.app",
-      buttonText: "Launch Console",
+      link: "",
+      buttonText: "STILL BUILDING",
       mockupUrl: "voxtro.app/console",
       mockupHeader: {
         tag: "VOXTRO COLD START",
@@ -301,7 +301,7 @@ export default function Projects() {
     {
       title: "PERSONAL PORTFOLIO",
       tagline: "",
-      emoji: "💻",
+      emoji: "🕸️",
       description: "A premium, highly interactive developer portfolio featuring custom 3D card tilt mechanisms, glassmorphism, dynamic particle physics, and ambient backlighting designed to stand out.",
       features: [
         { label: "Dynamic Particle Physics", color: "bg-accentBlue" },
