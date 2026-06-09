@@ -215,7 +215,6 @@ export default function GlowBackground() {
             ctx.globalAlpha = 1.0;
           }
         }
-
         // 4. Interactive Web-Slinging to Mouse
         if (canvasMouse.x !== null && canvasMouse.y !== null) {
           const dx = p1.x - canvasMouse.x;

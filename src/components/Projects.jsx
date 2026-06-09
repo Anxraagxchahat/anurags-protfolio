@@ -43,7 +43,7 @@ function ProjectCard({ project }) {
         className="relative w-full rounded-3xl glass-card border-white/10 p-6 md:p-10 flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 hover:border-accentBlue/25 transition-colors duration-500 shadow-[0_30px_60px_rgba(0,0,0,0.5)] group overflow-hidden cursor-pointer select-none"
       >
         {/* Dynamic mouse-following radial gradient glow */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
             background: glowBg
@@ -54,7 +54,7 @@ function ProjectCard({ project }) {
 
         {/* Left: Product Info & Core Value proposition */}
         <div className="lg:col-span-6 flex flex-col text-left justify-center space-y-6">
-          
+
           {/* Title & Badge */}
           <div className="flex items-center space-x-3">
             {project.logo ? (
@@ -94,8 +94,8 @@ function ProjectCard({ project }) {
             <span className="text-[10px] text-gray-500 font-semibold tracking-widest uppercase">TECHNOLOGY STACK</span>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech, idx) => (
-                <span 
-                  key={idx} 
+                <span
+                  key={idx}
                   className="px-3 py-1 rounded-full text-xs font-semibold text-gray-300 bg-white/[0.03] border border-white/5 group-hover:border-accentBlue/20 transition-all duration-300"
                 >
                   {tech}
@@ -107,7 +107,7 @@ function ProjectCard({ project }) {
           {/* Action buttons */}
           <div className="pt-4 flex items-center">
             {project.link ? (
-              <a 
+              <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -117,7 +117,7 @@ function ProjectCard({ project }) {
                 <ExternalLink className="w-4 h-4" />
               </a>
             ) : (
-              <div 
+              <div
                 className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-accentBlue/20 to-accentPurple/20 border border-white/10 text-gray-400 font-bold text-sm rounded-full cursor-default select-none shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
               >
                 <span>{project.buttonText}</span>
@@ -133,7 +133,7 @@ function ProjectCard({ project }) {
           <div className="absolute inset-0 bg-accentBlue/5 rounded-3xl blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
           {/* Scaled-down Browser Frame */}
-          <motion.div 
+          <motion.div
             animate={{
               y: [0, -6, 0]
             }}
@@ -144,7 +144,7 @@ function ProjectCard({ project }) {
             }}
             className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden glass-card border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] p-3 flex flex-col space-y-3 bg-darkBg"
           >
-            
+
             {/* Browser Header Bar */}
             <div className="flex items-center justify-between pb-2 border-b border-white/5">
               {/* MacOS buttons */}
@@ -172,7 +172,7 @@ function ProjectCard({ project }) {
               {/* Simulated list of items */}
               <div className="flex-1 flex flex-col space-y-2 overflow-hidden">
                 {project.mockupItems.map((op, idx) => (
-                  <div 
+                  <div
                     key={idx}
                     className="flex items-center justify-between p-2 rounded-xl bg-white/[0.01] border border-white/5 hover:bg-white/[0.03] transition-colors"
                   >
@@ -217,7 +217,7 @@ export default function Projects() {
         { label: "Open Source Tracks", color: "bg-emerald-400" }
       ],
       techStack: ["React", "FastAPI", "Firebase", "Vercel", "Render"],
-      link: "https://opportunity-x.vercel.app",
+      link: "https://opportunityx.co.in",
       buttonText: "Launch Dashboard",
       mockupUrl: "opportunityx.app/dashboard",
       mockupHeader: {
@@ -252,12 +252,59 @@ export default function Projects() {
       ]
     },
     {
+      title: "VOXTRO",
+      tagline: "REAL-TIME COMMUNICATION CONSOLE",
+      logo: "/voxtro-logo.png",
+      emoji: "💬",
+      description: "A premium real-time collaboration suite engineered with secure E2EE chat messaging, high-fidelity WebRTC voice/video channels, and dynamic group workspace rooms. Re-architected for ultra-low latency, mobile readiness, and seamless synchronization.",
+      features: [
+        { label: "E2EE Chat Messaging", color: "bg-accentBlue" },
+        { label: "WebRTC Video & Voice", color: "bg-accentPurple" },
+        { label: "Capacitor Mobile Build", color: "bg-amber-400" },
+        { label: "Express & Socket.io Backend", color: "bg-emerald-400" }
+      ],
+      techStack: ["React", "TypeScript", "TailwindCSS", "Socket.io", "WebRTC", "Firebase", "Capacitor", "Node.js"],
+      link: "https://voxtr0.vercel.app",
+      buttonText: "Launch Console",
+      mockupUrl: "voxtro.app/console",
+      mockupHeader: {
+        tag: "VOXTRO COLD START",
+        title: "Initialize high-fidelity communication rooms."
+      },
+      mockupItems: [
+        {
+          title: "General Voice Room",
+          type: "WebRTC Active",
+          typeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+          company: "Voxtro Console",
+          details: "2.4ms avg ping",
+          icon: <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+        },
+        {
+          title: "End-to-End Chat E2EE",
+          type: "AES-GCM Keys",
+          typeColor: "text-rose-400 bg-rose-500/10 border-rose-500/20",
+          company: "Secure Channel",
+          details: "Local key generation",
+          icon: <Award className="w-3.5 h-3.5 text-rose-400" />
+        },
+        {
+          title: "Capacitor Android Core",
+          type: "Mobile Build",
+          typeColor: "text-sky-400 bg-sky-500/10 border-sky-500/20",
+          company: "Android Target",
+          details: "Gradle Native integration",
+          icon: <Code className="w-3.5 h-3.5 text-sky-400" />
+        }
+      ]
+    },
+    {
       title: "PERSONAL PORTFOLIO",
       tagline: "",
-      emoji: "🕸️",
-      description: "A premium, highly interactive developer portfolio featuring custom Spider-Man web physics, 3D card tilt mechanisms, glassmorphism, and ambient backlighting designed to stand out.",
+      emoji: "💻",
+      description: "A premium, highly interactive developer portfolio featuring custom 3D card tilt mechanisms, glassmorphism, dynamic particle physics, and ambient backlighting designed to stand out.",
       features: [
-        { label: "Spider-Man Web Physics", color: "bg-accentBlue" },
+        { label: "Dynamic Particle Physics", color: "bg-accentBlue" },
         { label: "3D Perspective Tilt", color: "bg-accentPurple" },
         { label: "Glassmorphic Design", color: "bg-amber-400" },
         { label: "Cinematic Animations", color: "bg-emerald-400" }
@@ -280,11 +327,11 @@ export default function Projects() {
           icon: <Code className="w-3.5 h-3.5 text-rose-400" />
         },
         {
-          title: "Web-slinging Physics",
+          title: "Custom Particle Physics",
           type: "Active",
           typeColor: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
           company: "Custom Cursor",
-          details: "Physics-based canvas lines",
+          details: "Physics-based canvas nodes",
           icon: <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
         },
         {
@@ -352,7 +399,7 @@ export default function Projects() {
       <div className="absolute bottom-[20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-accentPurple/5 glow-blob" />
 
       <div className="w-full max-w-5xl mx-auto z-10">
-        
+
         {/* Section Heading */}
         <div className="flex flex-col items-start text-left mb-16">
           <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-2">FEATURED PROJECTS</span>

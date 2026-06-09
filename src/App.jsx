@@ -10,7 +10,6 @@ import Projects from './components/Projects';
 import Journey from './components/Journey';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import WebStrand from './components/WebStrand';
 import CustomCursor from './components/CustomCursor';
 
 export default function App() {
@@ -45,9 +44,6 @@ export default function App() {
           {/* Individual Sections */}
           <main className="w-full relative z-10 flex flex-col">
             
-            {/* Connecting Spidey Web Strand */}
-            <WebStrand />
-
             {/* Hero Section */}
             <Hero />
 

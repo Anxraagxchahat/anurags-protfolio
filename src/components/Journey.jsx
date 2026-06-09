@@ -52,7 +52,7 @@ export default function Journey() {
     {
       year: "JUN 2026",
       title: "Cinematic Portfolio Canvas",
-      desc: "Designed and engineered this premium, highly interactive portfolio featuring custom Spider-Man web physics, 3D card tilts, and sleek glassmorphism to showcase all creative works.",
+      desc: "Designed and engineered this premium, highly interactive portfolio featuring custom 3D card tilts, dynamic particle systems, and sleek glassmorphism to showcase all creative works.",
       icon: <Globe className="w-5 h-5 text-accentBlue" />,
       accentClass: "from-accentBlue to-accentBlue-light"
     }
