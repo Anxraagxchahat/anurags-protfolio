@@ -9,7 +9,9 @@ import {
   ExternalLink, 
   Palette, 
   Globe, 
-  Server
+  Server,
+  Zap,
+  Smartphone
 } from 'lucide-react';
 
 export default function Skills() {
@@ -49,6 +51,14 @@ export default function Skills() {
       floatDelay: 1.5
     },
     {
+      name: "Next.js & TS",
+      category: "Full-Stack Web",
+      desc: "Type-safe App Router architecture, Server Actions, stateful dashboards, and SEO optimization.",
+      icon: <Zap className="w-5 h-5 text-amber-300" />,
+      glowColor: "rgba(245, 158, 11, 0.15)",
+      floatDelay: 2.2
+    },
+    {
       name: "Firebase",
       category: "Cloud Database",
       desc: "Realtime data synchronize, Firestore models, cloud storage, and secure authentication.",
@@ -65,12 +75,28 @@ export default function Skills() {
       floatDelay: 0.5
     },
     {
-      name: "AI/ML",
+      name: "AI/ML & Gemini",
       category: "Intelligent Systems",
-      desc: "LLMs routing, automated prompts, embeddings search, and semantic logic layers.",
+      desc: "Gemini API integrations, conversational prompt engineering, and semantic AI search agents.",
       icon: <Cpu className="w-5 h-5 text-accentPurple" />,
       glowColor: "rgba(168, 85, 247, 0.15)",
       floatDelay: 2
+    },
+    {
+      name: "Real-Time WebRTC",
+      category: "Real-Time Systems",
+      desc: "Low-latency WebSockets (Socket.io), end-to-end encrypted (E2EE) chat rooms, and WebRTC video.",
+      icon: <Webhook className="w-5 h-5 text-pink-500" />,
+      glowColor: "rgba(236, 72, 153, 0.15)",
+      floatDelay: 1.2
+    },
+    {
+      name: "Hybrid Mobile",
+      category: "Cross-Platform",
+      desc: "Wrapping web apps into native Android applications using Capacitor and custom gradle tools.",
+      icon: <Smartphone className="w-5 h-5 text-indigo-400" />,
+      glowColor: "rgba(129, 140, 248, 0.15)",
+      floatDelay: 2.8
     },
     {
       name: "GitHub",
@@ -84,30 +110,22 @@ export default function Skills() {
       name: "APIs Integration",
       category: "Connectivity",
       desc: "Rest protocols, third-party hooks, secure OAuth integrations, rapid ingest pipelines.",
-      icon: <Webhook className="w-5 h-5 text-rose-400" />,
-      glowColor: "rgba(251, 113, 133, 0.15)",
+      icon: <ExternalLink className="w-5 h-5 text-teal-400" />,
+      glowColor: "rgba(45, 212, 191, 0.15)",
       floatDelay: 1
     },
     {
-      name: "Vercel",
-      category: "Production Hosting",
-      desc: "Continuous deployment for frontends, preview environments, global edge hosting.",
+      name: "Vercel & Render",
+      category: "Hosting / DevOps",
+      desc: "Continuous deployment for frontends, preview builds, Docker containers, and cron tasks.",
       icon: <Globe className="w-5 h-5 text-white" />,
       glowColor: "rgba(255, 255, 255, 0.1)",
       floatDelay: 2.5
     },
     {
-      name: "Render",
-      category: "Backend Deploy",
-      desc: "Docker container running, web services management, SSL, cron utilities.",
-      icon: <ExternalLink className="w-5 h-5 text-indigo-400" />,
-      glowColor: "rgba(129, 140, 248, 0.15)",
-      floatDelay: 4
-    },
-    {
-      name: "UI/UX",
+      name: "UI/UX & Framer",
       category: "SaaS Design",
-      desc: "Apple-level minimal layouts, high-fidelity responsive forms, aesthetic glow tokens.",
+      desc: "Apple-level minimal layouts, high-fidelity responsive forms, Framer Motion, and aesthetic glassmorphism.",
       icon: <Palette className="w-5 h-5 text-pink-400" />,
       glowColor: "rgba(244, 63, 94, 0.15)",
       floatDelay: 1.8

@@ -17,8 +17,8 @@ export default function Hero() {
 
   const fadeUpVariants = {
     initial: { y: 40, opacity: 0 },
-    animate: { 
-      y: 0, 
+    animate: {
+      y: 0,
       opacity: 1,
       transition: { type: "spring", damping: 20, stiffness: 60, mass: 0.8 }
     }
@@ -26,14 +26,14 @@ export default function Hero() {
 
   const stats = [
     { value: "2", label: "Startup Building", icon: <Layers className="w-4 h-4 text-accentPurple" /> },
-    { value: "4", label: "Projects Built", icon: <Code className="w-4 h-4 text-accentBlue-light" /> },
+    { value: "5", label: "Projects Built", icon: <Code className="w-4 h-4 text-accentBlue-light" /> },
     { value: "AI/ML", label: "+ Full Stack", icon: <Sparkles className="w-4 h-4 text-amber-400" /> },
     { value: "Live", label: "Real Product Live", icon: <CheckCircle className="w-4 h-4 text-emerald-400" /> }
   ];
 
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 overflow-hidden"
     >
@@ -42,11 +42,11 @@ export default function Hero() {
       <div className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-accentPurple/10 glow-blob" />
 
       {/* Giant Glowing Spider-Man Web behind the content */}
-      <svg 
-        className="absolute right-[-10%] top-[10%] w-[600px] h-[600px] text-accentPurple/15 pointer-events-none transform rotate-12 z-0 filter drop-shadow-[0_0_15px_rgba(226,54,54,0.15)]" 
-        viewBox="0 0 100 100" 
-        fill="none" 
-        stroke="currentColor" 
+      <svg
+        className="absolute right-[-10%] top-[10%] w-[600px] h-[600px] text-accentPurple/15 pointer-events-none transform rotate-12 z-0 filter drop-shadow-[0_0_15px_rgba(226,54,54,0.15)]"
+        viewBox="0 0 100 100"
+        fill="none"
+        stroke="currentColor"
         strokeWidth="0.15"
       >
         <line x1="50" y1="50" x2="50" y2="0" />
@@ -73,16 +73,16 @@ export default function Hero() {
       </svg>
 
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
-        
+
         {/* Left Column: Text & Content */}
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="initial"
           animate="animate"
           className="lg:col-span-7 flex flex-col items-start text-left space-y-6 lg:pr-4"
         >
           {/* Badge */}
-          <motion.div 
+          <motion.div
             variants={fadeUpVariants}
             className="flex items-center space-x-2 px-3.5 py-1.5 rounded-full glass-card border-white/5 shadow-[0_4px_12px_rgba(0,0,0,0.2)] text-xs font-semibold tracking-wider text-accentBlue-light"
           >
@@ -104,7 +104,7 @@ export default function Hero() {
           </motion.div>
 
           {/* Quick Subtitle Headline */}
-          <motion.h2 
+          <motion.h2
             variants={fadeUpVariants}
             className="text-lg md:text-xl font-bold tracking-wide text-gray-200 uppercase"
           >
@@ -112,7 +112,7 @@ export default function Hero() {
           </motion.h2>
 
           {/* Description */}
-          <motion.p 
+          <motion.p
             variants={fadeUpVariants}
             className="text-sm md:text-base text-gray-400 font-light leading-relaxed max-w-xl"
           >
@@ -120,17 +120,17 @@ export default function Hero() {
           </motion.p>
 
           {/* Buttons */}
-          <motion.div 
+          <motion.div
             variants={fadeUpVariants}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
           >
-            <a 
+            <a
               href="#projects"
               className="px-8 py-3.5 bg-gradient-to-r from-accentBlue to-accentPurple hover:brightness-110 text-white font-semibold text-sm rounded-full transition-all duration-300 shadow-[0_4px_30px_rgba(59,130,246,0.35)] text-center tracking-wider uppercase"
             >
               Explore Projects
             </a>
-            <a 
+            <a
               href="https://opportunity-x.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
@@ -141,13 +141,13 @@ export default function Hero() {
           </motion.div>
 
           {/* Dynamic Stats Grid */}
-          <motion.div 
+          <motion.div
             variants={fadeUpVariants}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pt-6 border-t border-white/5"
           >
             {stats.map((stat, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="flex flex-col p-3 rounded-2xl glass-card border-white/5 hover:border-white/10 transition-colors"
               >
                 <div className="flex items-center space-x-2 mb-1">
@@ -186,18 +186,18 @@ export default function Hero() {
           >
             {/* Hover light highlight effect */}
             <div className="absolute inset-0 bg-gradient-to-tr from-accentBlue/10 via-transparent to-accentPurple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            
+
             {/* The Portrait Container */}
             <div className="relative w-full h-full rounded-2xl overflow-hidden bg-darkBg">
-              <img 
-                src="/portrait3.jpg" 
-                alt="Anurag Verma" 
+              <img
+                src="/portrait3.jpg"
+                alt="Anurag Verma"
                 className="w-full h-full object-cover object-center filter grayscale contrast-[1.1] brightness-[0.88] hover:grayscale-0 hover:contrast-100 hover:brightness-100 transition-all duration-750 ease-out scale-105 group-hover:scale-100"
               />
               {/* Dual-tone Dark Vignette Gradient Layer */}
               <div className="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-80" />
               <div className="absolute inset-0 bg-[#030712]/10 mix-blend-color" />
-              
+
               {/* Cinematic Bottom Tag */}
               <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl backdrop-blur-md bg-black/40 border border-white/5 text-left flex flex-col justify-start">
                 <span className="text-[10px] text-accentBlue-light font-bold tracking-widest uppercase mb-0.5">ANURAG VERMA</span>
@@ -213,8 +213,8 @@ export default function Hero() {
       </div>
 
       {/* Slide down mouse scroll indicator */}
-      <a 
-        href="#about" 
+      <a
+        href="#about"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 opacity-40 hover:opacity-100 transition-opacity cursor-pointer hidden md:flex"
       >
         <span className="text-[10px] font-semibold tracking-widest text-white uppercase">SCROLL</span>

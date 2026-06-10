@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, Brain, Code, Rocket, Award, MessageSquare } from 'lucide-react';
+import { Calendar, Brain, Code, Rocket, Award, MessageSquare, Sparkles } from 'lucide-react';
 
 export default function About() {
   const containerVariants = {
@@ -44,6 +44,12 @@ export default function About() {
       date: "Apr 2026",
       desc: "Recognized the friction students face finding high-quality career boosters. Built OpportunityX to centralize discovery.",
       icon: <Rocket className="w-5 h-5 text-emerald-400" />
+    },
+    {
+      title: "Engineering Zenkai",
+      date: "Jun 2026",
+      desc: "Designed and built Zenkai, an intelligent anime search platform using Gemini AI suggestions and scene screenshot trace matching.",
+      icon: <Sparkles className="w-5 h-5 text-emerald-400" />
     },
     {
       title: "Architecting Voxtro",

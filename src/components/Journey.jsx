@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, Cpu, Globe, Rocket, HelpCircle, MessageSquare } from 'lucide-react';
+import { Calendar, Cpu, Globe, Rocket, HelpCircle, MessageSquare, Sparkles } from 'lucide-react';
 
 export default function Journey() {
   const containerVariants = {
@@ -55,6 +55,13 @@ export default function Journey() {
       desc: "Designed and engineered this premium, highly interactive portfolio featuring custom 3D card tilts, dynamic particle systems, and sleek glassmorphism to showcase all creative works.",
       icon: <Globe className="w-5 h-5 text-accentBlue" />,
       accentClass: "from-accentBlue to-accentBlue-light"
+    },
+    {
+      year: "JUN 2026",
+      title: "AI Anime Discovery: Zenkai",
+      desc: "Designed and engineered Zenkai, an AI-driven anime discovery ecosystem integrating Gemini AI for natural-language search suggestions, scene trace screenshot recognition, and customized user vibe profile dashboards.",
+      icon: <Sparkles className="w-5 h-5 text-emerald-400" />,
+      accentClass: "from-emerald-400 to-emerald-300"
     },
     {
       year: "JUN-JULY 2026",
