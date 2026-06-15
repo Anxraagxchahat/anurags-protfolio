@@ -74,10 +74,10 @@ function ProjectCard({ project }) {
         <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-tr from-accentBlue/10 to-accentPurple/10 rounded-full blur-[100px] pointer-events-none group-hover:scale-110 transition-transform duration-700" />
 
         {/* Left: Product Info & Core Value proposition */}
-        <div className="lg:col-span-6 flex flex-col text-left justify-center space-y-6">
+        <div className="lg:col-span-6 flex flex-col text-left justify-center space-y-6" style={{ transform: "translateZ(35px)", transformStyle: "preserve-3d" }}>
 
           {/* Title & Badge */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3" style={{ transform: "translateZ(20px)" }}>
             {project.logo ? (
               <div className="w-14 h-14 p-1 rounded-2xl bg-accentBlue/15 border border-accentBlue/25 shadow-[0_0_20px_rgba(59,130,246,0.15)] flex items-center justify-center overflow-hidden">
                 <img src={project.logo} alt={project.title} className="w-full h-full object-cover rounded-xl" />
@@ -96,12 +96,12 @@ function ProjectCard({ project }) {
           </div>
 
           {/* Description */}
-          <p className="text-sm md:text-base text-gray-400 font-light leading-relaxed">
+          <p className="text-sm md:text-base text-gray-400 font-light leading-relaxed" style={{ transform: "translateZ(15px)" }}>
             {project.description}
           </p>
 
           {/* Structured Feature Tags */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 text-xs text-gray-300 font-medium">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2 text-xs text-gray-300 font-medium" style={{ transform: "translateZ(20px)" }}>
             {project.features.map((feature, idx) => (
               <div key={idx} className="flex items-center space-x-2 p-2 rounded-xl bg-white/[0.02] border border-white/5">
                 <span className={`w-1.5 h-1.5 rounded-full ${feature.color}`} />
@@ -111,7 +111,7 @@ function ProjectCard({ project }) {
           </div>
 
           {/* Tech Stack Pills */}
-          <div className="space-y-2">
+          <div className="space-y-2" style={{ transform: "translateZ(20px)" }}>
             <span className="text-[10px] text-gray-500 font-semibold tracking-widest uppercase">TECHNOLOGY STACK</span>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech, idx) => (
@@ -126,7 +126,7 @@ function ProjectCard({ project }) {
           </div>
 
           {/* Action buttons */}
-          <div className="pt-4 flex items-center">
+          <div className="pt-4 flex items-center" style={{ transform: "translateZ(25px)" }}>
             {project.link ? (
               <a
                 href={project.link}
@@ -149,7 +149,7 @@ function ProjectCard({ project }) {
         </div>
 
         {/* Right: Premium Interactive CSS Dashboard Mockup */}
-        <div className="lg:col-span-6 flex items-center justify-center relative">
+        <div className="lg:col-span-6 flex items-center justify-center relative" style={{ transform: "translateZ(45px)", transformStyle: "preserve-3d" }}>
           {/* Ambient backlight ring */}
           <div className="absolute inset-0 bg-accentBlue/5 rounded-3xl blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -164,6 +164,7 @@ function ProjectCard({ project }) {
               ease: "easeInOut"
             }}
             className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden glass-card border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.5)] flex flex-col bg-darkBg"
+            style={{ transform: "translateZ(20px)" }}
           >
 
             {/* Browser Header Bar */}

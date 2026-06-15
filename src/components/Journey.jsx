@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Calendar, Cpu, Globe, Rocket, HelpCircle, MessageSquare, Sparkles } from 'lucide-react';
 
 export default function Journey() {
@@ -82,11 +82,11 @@ export default function Journey() {
 
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-20">
-          <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-2">MILESTONES</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white uppercase font-sans">
+          <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-accentBlue/20 bg-accentBlue/5">MILESTONES</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight gradient-text-animated uppercase font-sans">
             THE CHRONOLOGICAL TRACK
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-accentBlue to-accentPurple mt-4 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-accentBlue via-accentPurple to-accentBlue mt-5 rounded-full shadow-[0_0_10px_rgba(2,132,199,0.3)]" />
         </div>
 
         {/* Timeline Path container */}
@@ -125,14 +125,7 @@ export default function Journey() {
                 </div>
 
                 {/* Milestone Detail Card */}
-                <div className="flex-1 glass-card rounded-2xl p-6 border-white/5 group-hover:border-accentPurple/25 transition-all duration-300 shadow-md">
-                  <h4 className="text-lg font-bold text-white group-hover:text-accentPurple-light transition-colors mb-2">
-                    {ms.title}
-                  </h4>
-                  <p className="text-xs md:text-sm text-gray-400 font-light leading-relaxed">
-                    {ms.desc}
-                  </p>
-                </div>
+                <JourneyCard ms={ms} />
 
               </motion.div>
             ))}
@@ -142,5 +135,46 @@ export default function Journey() {
 
       </div>
     </section>
+  );
+}
+
+function JourneyCard({ ms }) {
+  const x = useMotionValue(0.5);
+  const y = useMotionValue(0.5);
+
+  const tiltSpringConfig = { damping: 25, stiffness: 150 };
+  const rotateX = useSpring(useTransform(y, [0, 1], [6, -6]), tiltSpringConfig);
+  const rotateY = useSpring(useTransform(x, [0, 1], [-6, 6]), tiltSpringConfig);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width);
+    y.set((e.clientY - rect.top) / rect.height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0.5);
+    y.set(0.5);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+        transformPerspective: 800
+      }}
+      className="flex-1 glass-card rounded-2xl p-6 border-white/5 group-hover:border-accentPurple/25 transition-all duration-300 shadow-md cursor-pointer select-none"
+    >
+      <h4 className="text-lg font-bold text-white group-hover:text-accentPurple-light transition-colors mb-2" style={{ transform: "translateZ(20px)" }}>
+        {ms.title}
+      </h4>
+      <p className="text-xs md:text-sm text-gray-400 font-light leading-relaxed" style={{ transform: "translateZ(10px)" }}>
+        {ms.desc}
+      </p>
+    </motion.div>
   );
 }
