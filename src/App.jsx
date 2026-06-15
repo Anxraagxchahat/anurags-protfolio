@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Loader from './components/Loader';
-import GlowBackground from './components/GlowBackground';
+import Background3D from './components/Background3D';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -16,9 +16,11 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <>
-      {/* Dynamic Animated Glass Background */}
-      <GlowBackground />
+    <div className="grain-overlay">
+      {/* WebGL 3D Animated Background */}
+      <Suspense fallback={<div className="fixed inset-0 bg-darkBg" />}>
+        <Background3D />
+      </Suspense>
 
       {/* Premium Cinematic Entry Loader */}
       <AnimatePresence mode="wait">
@@ -69,6 +71,6 @@ export default function App() {
 
         </motion.div>
       )}
-    </>
+    </div>
   );
 }
