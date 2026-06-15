@@ -1,5 +1,6 @@
 import { useState, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import Loader from './components/Loader';
 import Background3D from './components/Background3D';
 import Navbar from './components/Navbar';
@@ -71,6 +72,9 @@ export default function App() {
 
         </motion.div>
       )}
+
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </div>
   );
 }
