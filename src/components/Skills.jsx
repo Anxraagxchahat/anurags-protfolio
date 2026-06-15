@@ -142,11 +142,11 @@ export default function Skills() {
         
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-xs font-bold tracking-widest text-accentPurple uppercase mb-2">TECHNICAL STACK</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white uppercase font-sans">
+          <span className="text-xs font-bold tracking-widest text-accentPurple uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-accentPurple/20 bg-accentPurple/5">TECHNICAL STACK</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight gradient-text-animated uppercase font-sans">
             ENGINEERING CAPABILITIES
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-accentPurple to-accentBlue mt-4 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-accentPurple via-accentBlue to-accentPurple mt-5 rounded-full shadow-[0_0_10px_rgba(226,54,54,0.3)]" />
         </div>
 
         {/* Premium Skill Cards Grid */}
@@ -172,8 +172,8 @@ function SkillCard({ skill, variants }) {
   const y = useMotionValue(0.5);
 
   const tiltSpringConfig = { damping: 25, stiffness: 150 };
-  const rotateX = useSpring(useTransform(y, [0, 1], [8, -8]), tiltSpringConfig);
-  const rotateY = useSpring(useTransform(x, [0, 1], [-8, 8]), tiltSpringConfig);
+  const rotateX = useSpring(useTransform(y, [0, 1], [10, -10]), tiltSpringConfig);
+  const rotateY = useSpring(useTransform(x, [0, 1], [-10, 10]), tiltSpringConfig);
 
   const glowX = useSpring(useTransform(x, [0, 1], ["0%", "100%"]), tiltSpringConfig);
   const glowY = useSpring(useTransform(y, [0, 1], ["0%", "100%"]), tiltSpringConfig);
@@ -211,39 +211,40 @@ function SkillCard({ skill, variants }) {
           rotateX,
           rotateY,
           transformStyle: "preserve-3d",
-          transformPerspective: 800,
+          transformPerspective: 1000,
           "--glow-color": skill.glowColor
         }}
-        className="group relative rounded-2xl glass-card border-white/5 p-6 flex flex-col text-left space-y-4 hover:bg-white/[0.04] hover:border-white/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md h-full cursor-pointer select-none"
+        className="group relative rounded-2xl glass-card border-white/5 p-6 flex flex-col text-left space-y-4 hover:bg-white/[0.04] hover:border-white/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md h-full cursor-pointer select-none neon-border"
       >
         {/* Dynamic mouse-following light accent behind the card */}
         <motion.div 
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background: glowBg
+            background: glowBg,
+            transform: "translateZ(10px)"
           }}
         />
 
-        <div className="flex items-center justify-between" style={{ transform: "translateZ(30px)" }}>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 group-hover:bg-white/[0.06] transition-colors">
+        <div className="flex items-center justify-between" style={{ transform: "translateZ(45px)", transformStyle: "preserve-3d" }}>
+          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 group-hover:bg-white/[0.06] transition-colors" style={{ transform: "translateZ(20px)" }}>
             {skill.icon}
           </div>
-          <span className="text-[10px] font-bold tracking-wider text-accentPurple-light bg-accentPurple/10 border border-accentPurple/25 px-2.5 py-1 rounded-full uppercase">
+          <span className="text-[10px] font-bold tracking-wider text-accentPurple-light bg-accentPurple/10 border border-accentPurple/25 px-2.5 py-1 rounded-full uppercase" style={{ transform: "translateZ(15px)" }}>
             {skill.category}
           </span>
         </div>
 
-        <div className="space-y-1" style={{ transform: "translateZ(20px)" }}>
-          <h4 className="text-lg font-bold text-white group-hover:text-accentBlue-light transition-colors">
+        <div className="space-y-1.5" style={{ transform: "translateZ(35px)", transformStyle: "preserve-3d" }}>
+          <h4 className="text-lg font-bold text-white group-hover:text-accentBlue-light transition-colors" style={{ transform: "translateZ(20px)" }}>
             {skill.name}
           </h4>
-          <p className="text-xs text-gray-400 font-light leading-relaxed">
+          <p className="text-xs text-gray-400 font-light leading-relaxed" style={{ transform: "translateZ(15px)" }}>
             {skill.desc}
           </p>
         </div>
 
         {/* Decorative premium line */}
-        <div className="h-[1px] w-0 bg-gradient-to-r from-accentBlue to-accentPurple group-hover:w-full transition-all duration-500 ease-out" />
+        <div className="h-[1px] w-0 bg-gradient-to-r from-accentBlue to-accentPurple group-hover:w-full transition-all duration-500 ease-out" style={{ transform: "translateZ(25px)" }} />
       </motion.div>
     </motion.div>
   );

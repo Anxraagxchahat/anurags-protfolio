@@ -69,11 +69,11 @@ export default function About() {
         
         {/* Section Heading */}
         <div className="flex flex-col items-start text-left mb-16">
-          <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-2">MY STORY</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white uppercase font-sans">
+          <span className="text-xs font-bold tracking-widest text-accentBlue uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-accentBlue/20 bg-accentBlue/5">MY STORY</span>
+          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight gradient-text-animated uppercase font-sans">
             FROM ZERO TO FOUNDER
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-accentBlue to-accentPurple mt-4 rounded-full" />
+          <div className="w-20 h-1 bg-gradient-to-r from-accentBlue via-accentPurple to-accentBlue mt-5 rounded-full shadow-[0_0_10px_rgba(2,132,199,0.3)]" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
