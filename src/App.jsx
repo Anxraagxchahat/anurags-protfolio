@@ -14,13 +14,13 @@ import Loader from './components/Loader';
 import CustomCursor from './components/CustomCursor';
 import Nav from './sections/Nav';
 import Hero from './sections/Hero';
+import About from './sections/About';
+import Skills from './sections/Skills';
+import Projects from './sections/Projects';
+import Journey from './sections/Journey';
 
-// Sections not yet rebuilt (P4/P5) — still the current components, rendered over
-// the new World layer. They will be migrated to SectionShell in later phases.
-import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Journey from './components/Journey';
+// Sections not yet rebuilt (P6) — still the current components, rendered over
+// the new World layer.
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
