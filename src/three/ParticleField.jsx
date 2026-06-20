@@ -63,7 +63,7 @@ export default function ParticleField({ count = 6000, radius = 9, size = 0.025, 
           size={size}
           sizeAttenuation
           depthWrite={false}
-          opacity={0.7}
+          opacity={0.5}
           blending={THREE.AdditiveBlending}
         />
       </Points>

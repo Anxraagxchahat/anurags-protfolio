@@ -50,17 +50,21 @@ const FRAG = /* glsl */ `
     float core = smoothstep(0.0, 0.22, r);     // hollow center
     float edgeFade = 1.0 - smoothstep(0.86, 1.0, r);
 
-    float alpha = edgeFade * core * (0.30 + 0.65 * swirlGlow);
-    alpha += rim * (0.6 + uFlare);
+    // P7 audit: dial back resting intensity so the portal is ambient depth, not
+    // a spotlight competing with the hero name. Flare still reads on crossings.
+    float alpha = edgeFade * core * (0.045 + 0.11 * swirlGlow);
+    alpha += rim * (0.07 + uFlare * 0.22);
 
-    col += rim * uColorC * (0.5 + uFlare * 1.5);
-    col *= (1.0 + uFlare * 0.8);
+    col += rim * uColorC * (0.32 + uFlare * 1.3);
+    col *= (1.0 + uFlare * 0.7);
 
     gl_FragColor = vec4(col, clamp(alpha, 0.0, 1.0));
   }
 `;
 
-export default function Portal({ scale = 7, position = [0, 0, -4], animate = true }) {
+// P7 audit: shifted to the right/down (behind the photo card, not the name) and
+// scaled down so the headline reads against clean void.
+export default function Portal({ scale = 2.6, position = [2.6, -0.6, -7.5], animate = true }) {
   const meshRef = useRef(null);
 
   const material = useMemo(
@@ -71,6 +75,7 @@ export default function Portal({ scale = 7, position = [0, 0, -4], animate = tru
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
+        opacity: 0.22,
         uniforms: {
           uTime: { value: 0 },
           uFlare: { value: 0 },

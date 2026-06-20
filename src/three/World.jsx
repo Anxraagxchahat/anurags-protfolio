@@ -33,12 +33,14 @@ function SceneTick() {
 function getBudget({ tier, lowPower }) {
   const effective = lowPower ? 'mobile' : tier;
   switch (effective) {
+    // P7 audit: trimmed counts (calmer field, less noise behind text) — still
+    // ample at depth. dpr capped a touch lower on desktop to ease fill cost.
     case 'desktop':
-      return { dpr: [1, 1.75], particles: 8000, filaments: true, fx: 'desktop' };
+      return { dpr: [1, 1.6], particles: 2400, filaments: true, fx: 'desktop' };
     case 'tablet':
-      return { dpr: [1, 1.5], particles: 4000, filaments: true, fx: 'tablet' };
+      return { dpr: [1, 1.5], particles: 1300, filaments: true, fx: 'tablet' };
     default: // mobile / lowPower
-      return { dpr: 1, particles: lowPower ? 800 : 1200, filaments: false, fx: 'mobile' };
+      return { dpr: 1, particles: lowPower ? 350 : 900, filaments: false, fx: 'mobile' };
   }
 }
 

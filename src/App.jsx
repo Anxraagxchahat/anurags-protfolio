@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Suspense, lazy, useCallback, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { CapabilityProvider, useCapabilities } from './lib/useReducedMotion';
@@ -6,7 +6,9 @@ import { LenisProvider } from './lib/useLenis';
 import { PortalProvider } from './ui/PortalTransition';
 import { setScroll } from './three/sceneController';
 
-import World from './three/World';
+// P7: the World pulls in three / fiber / drei / postprocessing — code-split it
+// into its own chunk so the hero (Name → Role) paints without waiting on WebGL.
+const World = lazy(() => import('./three/World'));
 import Grain from './ui/Grain';
 import ScrollProgress from './ui/ScrollProgress';
 
@@ -18,11 +20,8 @@ import About from './sections/About';
 import Skills from './sections/Skills';
 import Projects from './sections/Projects';
 import Journey from './sections/Journey';
-
-// Sections not yet rebuilt (P6) — still the current components, rendered over
-// the new World layer.
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import Contact from './sections/Contact';
+import Footer from './sections/Footer';
 
 // Inner shell: reads capabilities, wires Lenis (single scroll source → the World
 // reads scroll from sceneController, so World.driveScroll is off here).
@@ -38,8 +37,11 @@ function AppShell() {
   return (
     <LenisProvider reducedMotion={reducedMotion} saveData={saveData} onScroll={handleLenisScroll}>
       <PortalProvider>
-        {/* WORLD LAYER — single persistent canvas, fixed behind everything */}
-        <World driveScroll={false} />
+        {/* WORLD LAYER — single persistent canvas, fixed behind everything.
+            Lazy chunk; until it streams in, the dark page base shows through. */}
+        <Suspense fallback={null}>
+          <World driveScroll={false} />
+        </Suspense>
 
         {/* Global film grain overlay */}
         <Grain />

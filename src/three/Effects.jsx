@@ -11,18 +11,18 @@ import * as THREE from 'three';
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing';
 
 export default function Effects({ tier = 'desktop' }) {
-  const caOffset = useMemo(() => new THREE.Vector2(0.0006, 0.0006), []);
+  const caOffset = useMemo(() => new THREE.Vector2(0.00015, 0.00015), []);
 
   if (tier === 'mobile') return null;
 
   return (
     <EffectComposer multisampling={0} disableNormalPass>
       <Bloom
-        intensity={0.55}
-        luminanceThreshold={0.62}
-        luminanceSmoothing={0.9}
-        mipmapBlur
-      />
+  intensity={0.15}
+  luminanceThreshold={0.82}
+  luminanceSmoothing={0.95}
+    />
+    
       {tier === 'desktop' && (
         <ChromaticAberration offset={caOffset} radialModulation={false} modulationOffset={0} />
       )}

@@ -100,6 +100,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #ff4d6d, #38bdf8);
   }
+
+  /* Accessibility: always-visible keyboard focus ring (section-accent tinted).
+     Mouse users keep clean UI via :focus-visible; keyboard users get a clear
+     target on links, buttons, form fields, and programmatic focus targets. */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent, #38bdf8);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 
 @layer utilities {
@@ -380,6 +389,13 @@
   /* Ensure Three.js canvas does not block pointer events */
   canvas {
     pointer-events: none !important;
+  }
+
+  /* Desktop custom cursor (fine-pointer only): hide the OS cursor so the two
+     don't double up. CustomCursor toggles this class; never set on touch. */
+  body.cursor-none,
+  body.cursor-none * {
+    cursor: none;
   }
 
   /* Magnetic hover lift */

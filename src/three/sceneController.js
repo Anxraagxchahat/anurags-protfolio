@@ -60,7 +60,7 @@ export function updateScene(dt) {
   sceneState.accent.r = THREE.MathUtils.damp(sceneState.accent.r, sceneState.accentTarget.r, 3, d);
   sceneState.accent.g = THREE.MathUtils.damp(sceneState.accent.g, sceneState.accentTarget.g, 3, d);
   sceneState.accent.b = THREE.MathUtils.damp(sceneState.accent.b, sceneState.accentTarget.b, 3, d);
-  sceneState.portalFlare = THREE.MathUtils.damp(sceneState.portalFlare, 0, 4, d);
+  sceneState.portalFlare = THREE.MathUtils.damp(sceneState.portalFlare, 0, 10, d);
 }
 
 export default sceneState;
