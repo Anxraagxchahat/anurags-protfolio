@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "jetro": {
+      "command": "C:\\Users\\verma\\.jetro\\runtime\\node-win32-x64.exe",
+      "args": [
+        "C:\\Users\\verma\\.jetro\\mcp-server\\index.js"
+      ],
+      "env": {
+        "JET_WORKSPACE": "e:\\anurags-protfolio",
+        "JET_API_URL": "https://api.jetro.ai",
+        "PATH": "C:\\Users\\verma\\.jetro\\runtime;C:\\Python314\\Scripts\\;C:\\Python314\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\NVIDIA Corporation\\NVIDIA App\\NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\Git\\cmd;C:\\Users\\verma\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\;C:\\Users\\verma\\AppData\\Local\\Programs\\Python\\Python311\\;C:\\Users\\verma\\.local\\bin;C:\\Users\\verma\\AppData\\Local\\Microsoft\\WindowsApps;D:\\Antigravity\\bin;E:\\Antigravity\\bin;C:\\Users\\verma\\AppData\\Local\\Programs\\Antigravity IDE\\bin;C:\\Users\\verma\\AppData\\Roaming\\npm;C:\\Users\\verma\\AppData\\Local\\Microsoft\\WinGet\\Packages\\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\\ffmpeg-8.1.1-full_build\\bin;C:\\tools\\flutter\\bin;C:\\Users\\verma\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\verma\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\verma\\AppData\\Local\\Programs\\Ollama"
+      }
+    }
+  }
+}
