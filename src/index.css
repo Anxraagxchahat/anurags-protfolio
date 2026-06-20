@@ -1,8 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================================
+   Centralized theme tokens (CSS custom properties).
+   Mirrors tailwind.config.js + doc 02 §9. Components and the
+   World layer read these so accents/section colors stay data-driven.
+   --accent / --accent-2 are overwritten per-section on scroll.
+   ============================================================ */
+:root {
+  --ink: #020205;
+  --ink-800: #07070C;
+  --ink-700: #0C0D14;
+  --paper: #F4F5F7;
+  --paper-dim: #9CA3AF;
+
+  --spider-red: #E23636;
+  --spider-red-light: #FF4D6D;
+  --spider-blue: #38BDF8;
+  --spider-blue-deep: #0284C7;
+  --spider-violet: #A855F7;
+  --spider-amber: #FBBF24;
+  --spider-emerald: #34D399;
+  --spider-pink: #EC4899;
+
+  /* Per-section accent (default = Hero red). Set via theme.js / SectionShell. */
+  --accent: #E23636;
+  --accent-2: #38BDF8;
+
+  --rift-gradient: linear-gradient(120deg, #E23636, #A855F7, #38BDF8);
+  --portal-gradient: radial-gradient(circle, #38BDF8 0%, #A855F7 40%, #E23636 75%, transparent 100%);
+
+  --blur-glass: 16px;
+  --radius-card: 1.5rem;
+  --radius-panel: 0.25rem;
+
+  --grain-opacity: 0.05;
+  --halftone-opacity: 0.05;
+}
 
 @layer base {
   html {
@@ -17,23 +54,56 @@
     overflow-x: hidden;
   }
 
+  /* Reduced-motion: neutralize global smooth scroll so the OS preference wins */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* Lenis smooth-scroll required styles (used by lib/useLenis.js) */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   /* Custom premium scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: #020205;
   }
+
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #e23636, #0284c7);
     border-radius: 9999px;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #ff4d6d, #38bdf8);
   }
 }
 
 @layer utilities {
+
   /* Premium Glassmorphism Card Style */
   .glass-card {
     background: rgba(255, 255, 255, 0.02);
@@ -51,7 +121,7 @@
   .glass-card-hover:hover {
     background: rgba(255, 255, 255, 0.04);
     border-color: rgba(59, 130, 246, 0.2);
-    box-shadow: 
+    box-shadow:
       0 12px 40px 0 rgba(0, 0, 0, 0.5),
       0 0 20px 2px rgba(59, 130, 246, 0.1);
     transform: translateY(-4px);
@@ -61,15 +131,13 @@
 
   /* Animated shifting gradient text */
   .gradient-text-animated {
-    background: linear-gradient(
-      90deg,
-      #e23636,
-      #ff4d6d,
-      #38bdf8,
-      #0284c7,
-      #a855f7,
-      #e23636
-    );
+    background: linear-gradient(90deg,
+        #e23636,
+        #ff4d6d,
+        #38bdf8,
+        #0284c7,
+        #a855f7,
+        #e23636);
     background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
@@ -78,9 +146,17 @@
   }
 
   @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   /* Glitch text effect */
@@ -114,22 +190,59 @@
   }
 
   @keyframes glitch-effect {
-    0% { transform: translate(0); }
-    20% { transform: translate(-3px, 3px); }
-    40% { transform: translate(-3px, -3px); }
-    60% { transform: translate(3px, 3px); }
-    80% { transform: translate(3px, -3px); }
-    100% { transform: translate(0); }
+    0% {
+      transform: translate(0);
+    }
+
+    20% {
+      transform: translate(-3px, 3px);
+    }
+
+    40% {
+      transform: translate(-3px, -3px);
+    }
+
+    60% {
+      transform: translate(3px, 3px);
+    }
+
+    80% {
+      transform: translate(3px, -3px);
+    }
+
+    100% {
+      transform: translate(0);
+    }
   }
 
   @keyframes glitch-skew {
-    0% { transform: skew(0deg); }
-    2% { transform: skew(0.4deg); }
-    4% { transform: skew(0deg); }
-    48% { transform: skew(0deg); }
-    50% { transform: skew(-0.3deg); }
-    52% { transform: skew(0deg); }
-    100% { transform: skew(0deg); }
+    0% {
+      transform: skew(0deg);
+    }
+
+    2% {
+      transform: skew(0.4deg);
+    }
+
+    4% {
+      transform: skew(0deg);
+    }
+
+    48% {
+      transform: skew(0deg);
+    }
+
+    50% {
+      transform: skew(-0.3deg);
+    }
+
+    52% {
+      transform: skew(0deg);
+    }
+
+    100% {
+      transform: skew(0deg);
+    }
   }
 
   /* Neon glow border animation */
@@ -144,14 +257,12 @@
     inset: -2px;
     border-radius: inherit;
     padding: 2px;
-    background: linear-gradient(
-      135deg,
-      #e23636,
-      #0284c7,
-      #38bdf8,
-      #a855f7,
-      #e23636
-    );
+    background: linear-gradient(135deg,
+        #e23636,
+        #0284c7,
+        #38bdf8,
+        #a855f7,
+        #e23636);
     background-size: 400% 400%;
     animation: neon-rotate 6s linear infinite;
     -webkit-mask:
@@ -169,21 +280,29 @@
   }
 
   @keyframes neon-rotate {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   /* Pulse neon glow shadow */
   .neon-glow-red {
-    box-shadow: 
+    box-shadow:
       0 0 5px rgba(226, 54, 54, 0.3),
       0 0 20px rgba(226, 54, 54, 0.1),
       0 0 40px rgba(226, 54, 54, 0.05);
   }
 
   .neon-glow-blue {
-    box-shadow: 
+    box-shadow:
       0 0 5px rgba(2, 132, 199, 0.3),
       0 0 20px rgba(2, 132, 199, 0.1),
       0 0 40px rgba(2, 132, 199, 0.05);
@@ -213,14 +332,14 @@
 
   /* Neon text glow */
   .text-neon-red {
-    text-shadow: 
+    text-shadow:
       0 0 7px rgba(226, 54, 54, 0.6),
       0 0 20px rgba(226, 54, 54, 0.3),
       0 0 42px rgba(226, 54, 54, 0.1);
   }
 
   .text-neon-blue {
-    text-shadow: 
+    text-shadow:
       0 0 7px rgba(2, 132, 199, 0.6),
       0 0 20px rgba(2, 132, 199, 0.3),
       0 0 42px rgba(2, 132, 199, 0.1);
@@ -270,7 +389,7 @@
 
   .magnetic-hover:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 
+    box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.4),
       0 0 30px rgba(226, 54, 54, 0.08);
   }
@@ -316,7 +435,139 @@
   }
 
   @keyframes breathe {
-    0%, 100% { box-shadow: 0 0 5px rgba(226, 54, 54, 0.2), 0 0 10px rgba(226, 54, 54, 0.1); }
-    50% { box-shadow: 0 0 15px rgba(226, 54, 54, 0.4), 0 0 30px rgba(226, 54, 54, 0.2); }
+
+    0%,
+    100% {
+      box-shadow: 0 0 5px rgba(226, 54, 54, 0.2), 0 0 10px rgba(226, 54, 54, 0.1);
+    }
+
+    50% {
+      box-shadow: 0 0 15px rgba(226, 54, 54, 0.4), 0 0 30px rgba(226, 54, 54, 0.2);
+    }
+  }
+
+  /* ============================================================
+     COMIC / SPIDER-VERSE TEXTURE KIT (doc 02 §4)
+     Low-opacity, CSS/SVG generated — crisp, themeable, zero net weight.
+     ============================================================ */
+
+  /* Rift gradient text — the dimensional spectrum (display headings) */
+  .text-rift {
+    background: var(--rift-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Halftone / Ben-Day dots — radial dot grid, accent-tintable.
+     Tune via --halftone-size, --halftone-color on the element. */
+  .halftone {
+    --halftone-size: 6px;
+    --halftone-color: rgba(255, 255, 255, 0.5);
+    background-image: radial-gradient(var(--halftone-color) 1px, transparent 1.4px);
+    background-size: var(--halftone-size) var(--halftone-size);
+    opacity: var(--halftone-opacity);
+  }
+
+  /* Halftone that drifts (parallax feel); killed under reduced motion */
+  .halftone-drift {
+    animation: halftone-drift 24s linear infinite;
+  }
+
+  @keyframes halftone-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 120px 120px; }
+  }
+
+  /* Scanlines / print misregistration — faint horizontal CMYK-ish lines */
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.04) 0px,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  /* Resting chromatic offset on a display word (subtle 1–2px R/B shadow).
+     Intensifies during portal crossings via .chromatic-strong. */
+  .chromatic {
+    text-shadow:
+      1px 0 0 rgba(226, 54, 54, 0.55),
+      -1px 0 0 rgba(56, 189, 248, 0.55);
+  }
+
+  .chromatic-strong {
+    text-shadow:
+      6px 0 0 rgba(226, 54, 54, 0.75),
+      -6px 0 0 rgba(56, 189, 248, 0.75);
+  }
+
+  /* Comic ink panel — thick near-black stroke with offset accent shadow */
+  .comic-panel {
+    border: 2px solid #050507;
+    border-radius: var(--radius-panel);
+    box-shadow: 6px 6px 0 0 var(--accent);
+  }
+
+  /* Action lines / speed streaks — radial line burst behind flares */
+  .action-lines {
+    background-image: repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 255, 255, 0.06) 0deg 1deg,
+      transparent 1deg 6deg
+    );
+    -webkit-mask-image: radial-gradient(circle, transparent 30%, #000 70%);
+    mask-image: radial-gradient(circle, transparent 30%, #000 70%);
+  }
+
+  /* Accent-driven glass variant (reads --accent from SectionShell) */
+  .glow-accent {
+    box-shadow: 0 0 30px -8px var(--accent);
+  }
+
+  /* Animated film grain (evolves the static .grain-overlay).
+     Used by <Grain/> as a fixed full-viewport overlay. */
+  .grain-fixed {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    animation: grain-shift 0.6s steps(2) infinite;
+  }
+
+  @keyframes grain-shift {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(-4%, 3%); }
+    100% { transform: translate(3%, -2%); }
+  }
+
+  /* ============================================================
+     GLOBAL REDUCED-MOTION GUARDRAIL
+     CSS-driven idle loops must degrade; JS gates handle the rest.
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+
+    .halftone-drift,
+    .grain-fixed,
+    .breathe-glow,
+    .gradient-text-animated,
+    .glitch-text,
+    .glitch-text::before,
+    .glitch-text::after {
+      animation: none !important;
+    }
+
+    .chromatic,
+    .glitch-text::before,
+    .glitch-text::after {
+      text-shadow: none !important;
+    }
   }
 }
