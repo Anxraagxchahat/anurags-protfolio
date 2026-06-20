@@ -64,7 +64,7 @@ const FRAG = /* glsl */ `
 
 // P7 audit: shifted to the right/down (behind the photo card, not the name) and
 // scaled down so the headline reads against clean void.
-export default function Portal({ scale = 2.6, position = [2.6, -0.6, -7.5], animate = true }) {
+export default function Portal({ scale = 1.1, position = [1.8, -0.2, -9.5], animate = true }) {
   const meshRef = useRef(null);
 
   const material = useMemo(
