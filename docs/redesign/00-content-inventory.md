@@ -16,14 +16,14 @@
 | Name | **Anurag Verma** |
 |Primary role | Founder @ OpportunityX · Product Builder · Full-Stack & AI/ML Engineer|  
 | Short title (footer) | Student Founder & Web Architect |
-| Building since | January 2026 |
+| Building since | october 2025 |
 | Core focus | AI/ML · Full-Stack Web |
 | Preferred stack | FastAPI + React |
 | One-line positioning | Building products that help students discover opportunities, grow faster, and leverage AI at scale. |
 
 ### Bio (verbatim — long form)
 > A non-traditional path built on high-velocity learning. When I committed to learning code in
-> January 2026, I bypassed traditional sandbox tutorials in favor of building real products. I believe
+> october 2025, I bypassed traditional sandbox tutorials in favor of building real products. I believe
 > that students deserve better access to global career boosters, which drove me to design and develop
 > OpportunityX. My workflow integrates cutting-edge frontend libraries with fast API microservices.
 > I spend my time engineering responsive layouts, training custom models, and designing sleek user
@@ -127,7 +127,7 @@
 
 | Date | Title | Summary |
 |---|---|---|
-| **Jan 2026** | The Initial Spark | First lines of HTML/CSS/JS; grasped core paradigms and the leverage of frameworks. |
+| **Oct 2025** | The Initial Spark | First lines of HTML/CSS/JS; grasped core paradigms and the leverage of frameworks. |
 | **Feb 2026** | Exploring AI/ML & Digitalizing Retail | Built MS Verma Kirana Store (Lovable); explored ML patterns, embeddings search, custom Python model runners. |
 | **Mar 2026** | Web Engineering Masterclass | Mastered full-stack with FastAPI + React; stateful dashboards, API integrations, DB schemas. |
 | **Apr–Jun 2026** | Building & Launching OpportunityX | Designed and launched OpportunityX for students; deployed microservices at speed. |
@@ -163,7 +163,7 @@ Micro-copy to keep: "Response time: Typically under 4 hours."
 ## 7. SEO / Meta (PRESERVE & extend)
 
 - `<title>`: Anurag Verma | Founder @ OpportunityX & Full Stack Engineer
-- Description: Personal portfolio of Anurag Verma, student founder of OpportunityX and developer exploring AI/ML and full stack web engineering since January 2026.
+- Description: Personal portfolio of Anurag Verma, student founder of OpportunityX and developer exploring AI/ML and full stack web engineering since october 2025.
 - OG/Twitter image: `/portrait3.jpg`
 - Author/keywords: Anurag Verma, OpportunityX, Student Founder, AI, ML, React Developer, Full Stack Engineer
 
