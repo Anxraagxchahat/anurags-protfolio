@@ -7,16 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        darkBg: "#020205", // slightly darker black for spider theme
+        darkBg: "#ffffff", // Pure white for professional minimalist light theme
         accentBlue: {
-          light: "#38bdf8", // Spidey Electric light blue
-          DEFAULT: "#0284c7", // Spidey Blue
-          dark: "#0369a1", // Spidey Dark Blue
+          light: "#ffffff", // Pure white
+          DEFAULT: "#a3a3a3", // Neutral gray
+          dark: "#525252", // Dark gray
         },
         accentPurple: {
-          light: "#ff4d6d", // Spidey Light Red
-          DEFAULT: "#e23636", // Spidey Crimson Red (Marvel Red)
-          dark: "#9b0c0e", // Spidey Deep Red
+          light: "#e5e7eb", // Light silver
+          DEFAULT: "#ffffff", // Pure white
+          dark: "#262626", // Extra dark gray
         },
       },
       animation: {
