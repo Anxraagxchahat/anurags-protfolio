@@ -38,115 +38,115 @@ export default function Skills() {
       name: "Python",
       category: "Backend / ML",
       desc: "Core scripting, automation pipelines, and machine learning architectures.",
-      icon: <Terminal className="w-5 h-5 text-accentBlue" />,
-      glowColor: "rgba(59, 130, 246, 0.15)",
+      icon: <Terminal className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 0
     },
     {
       name: "React",
       category: "Frontend Core",
       desc: "Declarative component styling, state orchestration, and high-fps rendering.",
-      icon: <Layers className="w-5 h-5 text-sky-400" />,
-      glowColor: "rgba(56, 189, 248, 0.15)",
+      icon: <Layers className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 1.5
     },
     {
       name: "Next.js & TS",
       category: "Full-Stack Web",
       desc: "Type-safe App Router architecture, Server Actions, stateful dashboards, and SEO optimization.",
-      icon: <Zap className="w-5 h-5 text-amber-300" />,
-      glowColor: "rgba(245, 158, 11, 0.15)",
+      icon: <Zap className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 2.2
     },
     {
       name: "Firebase",
       category: "Cloud Database",
       desc: "Realtime data synchronize, Firestore models, cloud storage, and secure authentication.",
-      icon: <Database className="w-5 h-5 text-amber-400" />,
-      glowColor: "rgba(251, 191, 36, 0.15)",
+      icon: <Database className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 3
     },
     {
       name: "FastAPI",
       category: "Microservices",
       desc: "High-performance Python microservices, validation, auto documentation.",
-      icon: <Server className="w-5 h-5 text-emerald-400" />,
-      glowColor: "rgba(52, 211, 153, 0.15)",
+      icon: <Server className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 0.5
     },
     {
       name: "AI/ML & Gemini",
       category: "Intelligent Systems",
       desc: "Gemini API integrations, conversational prompt engineering, and semantic AI search agents.",
-      icon: <Cpu className="w-5 h-5 text-accentPurple" />,
-      glowColor: "rgba(168, 85, 247, 0.15)",
+      icon: <Cpu className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 2
     },
     {
       name: "Real-Time WebRTC",
       category: "Real-Time Systems",
       desc: "Low-latency WebSockets (Socket.io), end-to-end encrypted (E2EE) chat rooms, and WebRTC video.",
-      icon: <Webhook className="w-5 h-5 text-pink-500" />,
-      glowColor: "rgba(236, 72, 153, 0.15)",
+      icon: <Webhook className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 1.2
     },
     {
       name: "Hybrid Mobile",
       category: "Cross-Platform",
       desc: "Wrapping web apps into native Android applications using Capacitor and custom gradle tools.",
-      icon: <Smartphone className="w-5 h-5 text-indigo-400" />,
-      glowColor: "rgba(129, 140, 248, 0.15)",
+      icon: <Smartphone className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 2.8
     },
     {
       name: "GitHub",
       category: "Version Control",
       desc: "Distributed revisioning, branches management, workflows automation.",
-      icon: <GitBranch className="w-5 h-5 text-slate-300" />,
-      glowColor: "rgba(203, 213, 225, 0.15)",
+      icon: <GitBranch className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 3.5
     },
     {
       name: "APIs Integration",
       category: "Connectivity",
       desc: "Rest protocols, third-party hooks, secure OAuth integrations, rapid ingest pipelines.",
-      icon: <ExternalLink className="w-5 h-5 text-teal-400" />,
-      glowColor: "rgba(45, 212, 191, 0.15)",
+      icon: <ExternalLink className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 1
     },
     {
       name: "Vercel & Render",
       category: "Hosting / DevOps",
       desc: "Continuous deployment for frontends, preview builds, Docker containers, and cron tasks.",
-      icon: <Globe className="w-5 h-5 text-white" />,
-      glowColor: "rgba(255, 255, 255, 0.1)",
+      icon: <Globe className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 2.5
     },
     {
       name: "UI/UX & Framer",
       category: "SaaS Design",
       desc: "Apple-level minimal layouts, high-fidelity responsive forms, Framer Motion, and aesthetic glassmorphism.",
-      icon: <Palette className="w-5 h-5 text-pink-400" />,
-      glowColor: "rgba(244, 63, 94, 0.15)",
+      icon: <Palette className="w-5 h-5 text-zinc-900" />,
+      glowColor: "rgba(255, 255, 255, 0.05)",
       floatDelay: 1.8
     }
   ];
 
   return (
-    <section id="skills" className="relative py-24 px-4 overflow-hidden border-t border-white/5 bg-transparent">
+    <section id="skills" className="relative py-24 px-4 overflow-hidden border-t border-zinc-900/5 bg-transparent">
       {/* Background Soft Blobs */}
-      <div className="absolute top-[10%] left-[-15%] w-[400px] h-[400px] rounded-full bg-accentBlue/5 glow-blob" />
-      <div className="absolute bottom-[10%] right-[-15%] w-[400px] h-[400px] rounded-full bg-accentPurple/5 glow-blob" />
+      <div className="absolute top-[10%] left-[-15%] w-[400px] h-[400px] rounded-full bg-black/5 glow-blob" />
+      <div className="absolute bottom-[10%] right-[-15%] w-[400px] h-[400px] rounded-full bg-black/5 glow-blob" />
 
       <div className="w-full max-w-5xl mx-auto z-10">
         
         {/* Section Heading */}
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-xs font-bold tracking-widest text-accentPurple uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-accentPurple/20 bg-accentPurple/5">TECHNICAL STACK</span>
+          <span className="text-xs font-bold tracking-widest text-zinc-900 uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-zinc-900/15 bg-black/5">TECHNICAL STACK</span>
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight gradient-text-animated uppercase font-sans">
             ENGINEERING CAPABILITIES
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-accentPurple via-accentBlue to-accentPurple mt-5 rounded-full shadow-[0_0_10px_rgba(226,54,54,0.3)]" />
+          <div className="w-20 h-1 bg-gradient-to-r from-zinc-900 via-zinc-400 to-zinc-900 mt-5 rounded-full shadow-[0_0_10px_rgba(9,9,11,0.06)]" />
         </div>
 
         {/* Premium Skill Cards Grid */}
@@ -214,7 +214,7 @@ function SkillCard({ skill, variants }) {
           transformPerspective: 1000,
           "--glow-color": skill.glowColor
         }}
-        className="group relative rounded-2xl glass-card border-white/5 p-6 flex flex-col text-left space-y-4 hover:bg-white/[0.04] hover:border-white/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md h-full cursor-pointer select-none neon-border"
+        className="group relative rounded-2xl glass-card border-zinc-900/5 p-6 flex flex-col text-left space-y-4 hover:bg-black/[0.04] hover:border-zinc-900/15 hover:shadow-[0_12px_30px_var(--glow-color)] transition-all duration-300 shadow-md h-full cursor-pointer select-none neon-border"
       >
         {/* Dynamic mouse-following light accent behind the card */}
         <motion.div 
@@ -226,25 +226,25 @@ function SkillCard({ skill, variants }) {
         />
 
         <div className="flex items-center justify-between" style={{ transform: "translateZ(45px)", transformStyle: "preserve-3d" }}>
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 group-hover:bg-white/[0.06] transition-colors" style={{ transform: "translateZ(20px)" }}>
+          <div className="p-3 rounded-xl bg-black/[0.03] border border-zinc-900/5 group-hover:bg-black/[0.06] transition-colors" style={{ transform: "translateZ(20px)" }}>
             {skill.icon}
           </div>
-          <span className="text-[10px] font-bold tracking-wider text-accentPurple-light bg-accentPurple/10 border border-accentPurple/25 px-2.5 py-1 rounded-full uppercase" style={{ transform: "translateZ(15px)" }}>
+          <span className="text-[10px] font-bold tracking-wider text-zinc-900/80 bg-black/5 border border-zinc-900/10 px-2.5 py-1 rounded-full uppercase" style={{ transform: "translateZ(15px)" }}>
             {skill.category}
           </span>
         </div>
 
         <div className="space-y-1.5" style={{ transform: "translateZ(35px)", transformStyle: "preserve-3d" }}>
-          <h4 className="text-lg font-bold text-white group-hover:text-accentBlue-light transition-colors" style={{ transform: "translateZ(20px)" }}>
+          <h4 className="text-lg font-bold text-zinc-900 group-hover:text-zinc-900 transition-colors" style={{ transform: "translateZ(20px)" }}>
             {skill.name}
           </h4>
-          <p className="text-xs text-gray-400 font-light leading-relaxed" style={{ transform: "translateZ(15px)" }}>
+          <p className="text-xs text-zinc-700 font-medium leading-relaxed" style={{ transform: "translateZ(15px)" }}>
             {skill.desc}
           </p>
         </div>
 
         {/* Decorative premium line */}
-        <div className="h-[1px] w-0 bg-gradient-to-r from-accentBlue to-accentPurple group-hover:w-full transition-all duration-500 ease-out" style={{ transform: "translateZ(25px)" }} />
+        <div className="h-[1px] w-0 bg-gradient-to-r from-zinc-900 to-transparent group-hover:w-full transition-all duration-500 ease-out" style={{ transform: "translateZ(25px)" }} />
       </motion.div>
     </motion.div>
   );
