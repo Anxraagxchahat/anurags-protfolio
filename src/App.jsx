@@ -1,7 +1,7 @@
 import { useState, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Loader from './components/Loader';
-import Background3D from './components/Background3D';
+import BackgroundShader from './components/BackgroundShader';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -17,9 +17,9 @@ export default function App() {
 
   return (
     <div className="grain-overlay">
-      {/* WebGL 3D Animated Background */}
+      {/* WebGL Animated Mesh-Gradient Background */}
       <Suspense fallback={<div className="fixed inset-0 bg-darkBg" />}>
-        <Background3D />
+        <BackgroundShader />
       </Suspense>
 
       {/* Premium Cinematic Entry Loader */}
@@ -35,7 +35,7 @@ export default function App() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className="relative min-h-screen text-gray-100 selection:bg-accentBlue/30 selection:text-white"
+          className="relative min-h-screen text-zinc-900 selection:bg-zinc-900/15 selection:text-zinc-900"
         >
           {/* Custom Web-slinging Mouse Cursor */}
           <CustomCursor />
