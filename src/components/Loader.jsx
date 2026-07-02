@@ -57,18 +57,18 @@ export default function Loader({ onComplete }) {
         y: "-100%",
         transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] }
       }}
-      className="fixed inset-0 z-50 flex flex-col justify-center items-center bg-[#020205] overflow-hidden"
+      className="fixed inset-0 z-50 flex flex-col justify-center items-center bg-white overflow-hidden"
     >
       {/* Background ambient light */}
-      <div className="absolute w-[500px] h-[500px] bg-accentPurple/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute w-[300px] h-[300px] bg-accentBlue/8 rounded-full blur-[100px] pointer-events-none translate-x-32 translate-y-20" />
+      <div className="absolute w-[500px] h-[500px] bg-black/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute w-[300px] h-[300px] bg-black/5 rounded-full blur-[100px] pointer-events-none translate-x-32 translate-y-20" />
 
       {/* Top gradient line */}
       <motion.div 
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accentPurple to-transparent shadow-[0_0_15px_rgba(226,54,54,0.8)]"
+        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-zinc-300 to-transparent shadow-[0_0_15px_rgba(9,9,11,0.04)]"
       />
 
       {/* Bottom gradient line */}
@@ -76,32 +76,29 @@ export default function Loader({ onComplete }) {
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accentBlue to-transparent shadow-[0_0_15px_rgba(2,132,199,0.8)]"
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-zinc-300 to-transparent shadow-[0_0_15px_rgba(9,9,11,0.04)]"
       />
 
-      {/* Glowing Spider-Man Emblem */}
+      {/* Glowing Hexagon AV Emblem */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0, rotateY: -180 }}
         animate={{ scale: 1, opacity: 1, rotateY: 0 }}
         transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
         className="mb-8 relative"
       >
-        <div className="absolute -inset-6 rounded-full bg-accentPurple/10 filter blur-xl animate-pulse" />
-        <svg className="w-20 h-20 text-accentPurple relative z-10 filter drop-shadow-[0_0_12px_rgba(226,54,54,0.7)]" viewBox="0 0 100 100" fill="currentColor">
-          {/* Head */}
-          <polygon points="50,22 45,28 50,34 55,28" />
-          {/* Body */}
-          <polygon points="50,36 43,44 43,58 50,72 57,58 57,44" />
-          {/* Front/Top Legs */}
-          <path d="M 46,38 L 30,22 L 32,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 54,38 L 70,22 L 68,10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 45,44 L 24,32 L 22,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 55,44 L 76,32 L 78,18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          {/* Back/Bottom Legs */}
-          <path d="M 45,54 L 22,62 L 20,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 55,54 L 78,62 L 80,78" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 47,62 L 32,78 L 34,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M 53,62 L 68,78 L 66,92" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <div className="absolute -inset-6 rounded-full bg-black/5 filter blur-xl animate-pulse" />
+        <svg 
+          className="w-20 h-20 text-zinc-900 relative z-10 filter drop-shadow-[0_0_12px_rgba(9,9,11,0.1)]" 
+          viewBox="0 0 100 100" 
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="5"
+        >
+          {/* Outer Hexagon */}
+          <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" strokeLinecap="round" strokeLinejoin="round" />
+          {/* Inner Stylized 'A' & 'V' line paths */}
+          <path d="M35,65 L50,30 L65,65" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M40,50 L60,50" stroke="#737373" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </motion.div>
 
@@ -117,7 +114,7 @@ export default function Loader({ onComplete }) {
             <motion.span
               key={`a-${index}`}
               variants={textVariants}
-              className="text-white text-4xl md:text-7xl font-extrabold tracking-wide uppercase font-sans inline-block"
+              className="text-zinc-900 text-4xl md:text-7xl font-extrabold tracking-wide uppercase font-sans inline-block"
               style={{ transformStyle: 'preserve-3d' }}
             >
               {char}
@@ -141,9 +138,9 @@ export default function Loader({ onComplete }) {
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8, ease: "easeOut" }}
-          className="px-5 py-2 rounded-full glass-card text-xs md:text-sm font-medium tracking-widest text-accentBlue-light/90 uppercase border border-accentBlue/20 shadow-[0_0_15px_rgba(59,130,246,0.1)] flex items-center space-x-2.5"
+          className="px-5 py-2 rounded-full glass-card text-xs md:text-sm font-medium tracking-widest text-zinc-900/90 uppercase border border-zinc-900/10 shadow-[0_0_15px_rgba(9,9,11,0.04)] flex items-center space-x-2.5"
         >
-          <span className="w-2 h-2 rounded-full bg-accentBlue animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-zinc-900 animate-pulse" />
           <span>Founder @ OpportunityX</span>
         </motion.div>
 
@@ -155,12 +152,12 @@ export default function Loader({ onComplete }) {
           className="w-48 md:w-64 mt-4"
         >
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] text-gray-500 font-mono tracking-wider uppercase">Loading</span>
-            <span className="text-[10px] text-accentBlue font-mono font-bold">{Math.round(progress)}%</span>
+            <span className="text-[10px] text-zinc-400 font-mono tracking-wider uppercase">Loading</span>
+            <span className="text-[10px] text-zinc-900 font-mono font-bold">{Math.round(progress)}%</span>
           </div>
-          <div className="h-[2px] bg-white/5 rounded-full overflow-hidden">
+          <div className="h-[2px] bg-black/5 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-gradient-to-r from-accentPurple via-accentBlue to-accentBlue-light rounded-full"
+              className="h-full bg-zinc-900 rounded-full"
               style={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}
             />
@@ -173,7 +170,7 @@ export default function Loader({ onComplete }) {
         initial={{ height: 0, opacity: 0 }}
         animate={{ height: 60, opacity: 0.3 }}
         transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-        className="absolute bottom-12 w-[1px] bg-gradient-to-b from-white to-transparent"
+        className="absolute bottom-12 w-[1px] bg-gradient-to-b from-zinc-400 to-transparent"
       />
     </motion.div>
   );
