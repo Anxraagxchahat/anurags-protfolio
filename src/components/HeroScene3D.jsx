@@ -2,9 +2,10 @@ import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Float, MeshDistortMaterial, MeshWobbleMaterial, Sparkles, Trail, Stars } from '@react-three/drei';
 import * as THREE from 'three';
+import { ShaderPlane, EnergyRing } from './ui/background-paper-shaders';
 
-// A rotating wireframe Icosahedron with glowing edges
-function SpiderWebCore({ position = [0, 0, 0] }) {
+// A rotating wireframe Icosahedron with glowing edges (glowing core crystal)
+function CoreCrystal({ position = [0, 0, 0] }) {
   const meshRef = useRef();
   const wireRef = useRef();
 
@@ -31,8 +32,8 @@ function SpiderWebCore({ position = [0, 0, 0] }) {
           emissiveIntensity={0.3}
           roughness={0.5}
           metalness={0.8}
-          distort={0.3}
-          speed={2}
+          distort={0.2}
+          speed={1.5}
           transparent
           opacity={0.15}
         />
@@ -195,63 +196,7 @@ function DepthGrid() {
   );
 }
 
-// WebWeb connecting lines between objects - like a spider web in 3D
-function WebLines() {
-  const linesRef = useRef();
-  const nodeCount = 30;
 
-  const nodes = useMemo(() => {
-    return Array.from({ length: nodeCount }, () => ({
-      pos: new THREE.Vector3(
-        (Math.random() - 0.5) * 16,
-        (Math.random() - 0.5) * 16,
-        (Math.random() - 0.5) * 10
-      ),
-      vel: new THREE.Vector3(
-        (Math.random() - 0.5) * 0.01,
-        (Math.random() - 0.5) * 0.01,
-        (Math.random() - 0.5) * 0.005
-      ),
-    }));
-  }, []);
-
-  useFrame(() => {
-    nodes.forEach((node) => {
-      node.pos.add(node.vel);
-      if (Math.abs(node.pos.x) > 8) node.vel.x *= -1;
-      if (Math.abs(node.pos.y) > 8) node.vel.y *= -1;
-      if (Math.abs(node.pos.z) > 5) node.vel.z *= -1;
-    });
-
-    if (linesRef.current) {
-      const positions = [];
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const d = nodes[i].pos.distanceTo(nodes[j].pos);
-          if (d < 5) {
-            positions.push(
-              nodes[i].pos.x, nodes[i].pos.y, nodes[i].pos.z,
-              nodes[j].pos.x, nodes[j].pos.y, nodes[j].pos.z
-            );
-          }
-        }
-      }
-      const arr = new Float32Array(positions);
-      linesRef.current.geometry.setAttribute(
-        'position',
-        new THREE.BufferAttribute(arr, 3)
-      );
-      linesRef.current.geometry.attributes.position.needsUpdate = true;
-    }
-  });
-
-  return (
-    <lineSegments ref={linesRef}>
-      <bufferGeometry />
-      <lineBasicMaterial color="#e23636" transparent opacity={0.08} />
-    </lineSegments>
-  );
-}
 
 // Camera mouse follow controller
 function CameraController() {
@@ -303,10 +248,17 @@ export default function HeroScene3D() {
         {/* Camera follow mouse */}
         <CameraController />
 
-        {/* Central spider web crystal */}
+        {/* Central core crystal */}
         <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
-          <SpiderWebCore position={[3, 0.5, -2]} />
+          <CoreCrystal position={[3, 0.5, -2]} />
         </Float>
+
+        {/* Advanced shader accents (components/ui/background-paper-shaders) */}
+        <Float speed={2} rotationIntensity={0.2} floatIntensity={0.6}>
+          <ShaderPlane position={[3, 0.5, -3]} color1="#e23636" color2="#0284c7" />
+        </Float>
+        <EnergyRing radius={2.6} position={[3, 0.5, -2.5]} color="#0284c7" />
+        <EnergyRing radius={1.4} position={[3, 0.5, -2]} color="#e23636" />
 
         {/* Orbiting 3D geometric shapes */}
         <OrbitingShape radius={5} speed={0.3} offset={0} shape="octahedron" color="#e23636" size={0.4} />
@@ -315,38 +267,6 @@ export default function HeroScene3D() {
         <OrbitingShape radius={7} speed={0.15} offset={1} shape="dodecahedron" color="#e23636" size={0.25} />
         <OrbitingShape radius={5.5} speed={0.25} offset={3} shape="torusKnot" color="#ff4d6d" size={0.3} />
 
-        {/* Web-like connecting lines */}
-        <WebLines />
-
-        {/* Particle cloud field */}
-        <ParticleField />
-
-        {/* Sparkles from drei for ambient magic */}
-        <Sparkles
-          count={80}
-          scale={18}
-          size={1.5}
-          speed={0.3}
-          color="#e23636"
-        />
-        <Sparkles
-          count={60}
-          scale={20}
-          size={1}
-          speed={0.2}
-          color="#0284c7"
-        />
-
-        {/* Star field in the deep background */}
-        <Stars
-          radius={50}
-          depth={50}
-          count={1500}
-          factor={3}
-          saturation={0}
-          fade
-          speed={0.5}
-        />
 
         {/* Depth grid */}
         <DepthGrid />
