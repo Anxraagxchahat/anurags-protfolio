@@ -1,167 +1,134 @@
 import { motion } from 'framer-motion';
-import { Calendar, Brain, Code, Rocket, Award, MessageSquare, Sparkles } from 'lucide-react';
+import { Calendar, Brain, Code, Rocket, Sparkles, MessageSquare } from 'lucide-react';
+import SectionShell from './ui/SectionShell';
+import { VIEWPORT, staggerContainer, fadeUp, EASE } from '../lib/motion';
+
+const FACTS = [
+  { value: '2025', label: 'Coding Start' },
+  { value: 'AI/ML', label: 'Core Focus' },
+  { value: 'FastAPI + React', label: 'Preferred Stack' },
+];
+
+const CHAPTERS = [
+  {
+    icon: Calendar,
+    date: 'Oct 2025',
+    title: 'Started Coding',
+    desc: 'Wrote the first line of code in october 2025. Transitioned rapidly from theory to building shipping-grade applications.',
+  },
+  {
+    icon: Brain,
+    date: 'Feb 2026',
+    title: 'Exploring AI/ML & Web',
+    desc: 'Delved into machine learning frameworks, data ingestion APIs, and deep integrations of web systems.',
+  },
+  {
+    icon: Code,
+    date: 'Mar 2026',
+    title: 'Building Real-World Apps',
+    desc: 'Focused on solving actual problems. Shifted away from simple todo apps to full-scale cloud platforms.',
+  },
+  {
+    icon: Rocket,
+    date: 'Apr 2026',
+    title: 'Founder of OpportunityX',
+    desc: 'Recognized the friction students face finding high-quality career boosters. Built OpportunityX to centralize discovery.',
+  },
+  {
+    icon: Sparkles,
+    date: 'Jun 2026',
+    title: 'Engineering Zenkai',
+    desc: 'Designed and built Zenkai, an intelligent anime search platform using Gemini AI suggestions and scene screenshot trace matching.',
+  },
+  {
+    icon: MessageSquare,
+    date: 'Jun 2026',
+    title: 'Architecting Voxtro',
+    desc: 'Designed and built Voxtro, a secure real-time collaboration workspace with E2EE channels and WebRTC video rooms.',
+  },
+];
 
 export default function About() {
-  const containerVariants = {
-    initial: {},
-    animate: {
-      transition: {
-        staggerChildren: 0.15
-      }
-    }
-  };
-
-  const itemVariants = {
-    initial: { y: 35, opacity: 0 },
-    animate: {
-      y: 0,
-      opacity: 1,
-      transition: { type: "spring", damping: 22, stiffness: 70, mass: 0.8 }
-    }
-  };
-
-  const points = [
-    {
-      title: "Started Coding",
-      date: "Oct 2025",
-      desc: "Wrote the first line of code in october 2025. Transitioned rapidly from theory to building shipping-grade applications.",
-      icon: <Calendar className="w-5 h-5 text-zinc-900" />
-    },
-    {
-      title: "Exploring AI/ML & Web",
-      date: "Feb 2026",
-      desc: "Delved into machine learning frameworks, data ingestion APIs, and deep integrations of web systems.",
-      icon: <Brain className="w-5 h-5 text-zinc-900" />
-    },
-    {
-      title: "Building Real-World Apps",
-      date: "Mar 2026",
-      desc: "Focused on solving actual problems. Shifted away from simple todo apps to full-scale cloud platforms.",
-      icon: <Code className="w-5 h-5 text-zinc-900" />
-    },
-    {
-      title: "Founder of OpportunityX",
-      date: "Apr 2026",
-      desc: "Recognized the friction students face finding high-quality career boosters. Built OpportunityX to centralize discovery.",
-      icon: <Rocket className="w-5 h-5 text-zinc-900" />
-    },
-    {
-      title: "Engineering Zenkai",
-      date: "Jun 2026",
-      desc: "Designed and built Zenkai, an intelligent anime search platform using Gemini AI suggestions and scene screenshot trace matching.",
-      icon: <Sparkles className="w-5 h-5 text-zinc-900" />
-    },
-    {
-      title: "Architecting Voxtro",
-      date: "Jun 2026",
-      desc: "Designed and built Voxtro, a secure real-time collaboration workspace with E2EE channels and WebRTC video rooms.",
-      icon: <MessageSquare className="w-5 h-5 text-zinc-900" />
-    }
-  ];
-
   return (
-    <section id="about" className="relative py-24 px-4 overflow-hidden border-t border-zinc-900/5 bg-transparent">
-      {/* Background Soft Blobs */}
-      <div className="absolute top-[30%] right-[-10%] w-[350px] h-[350px] rounded-full bg-black/5 glow-blob" />
-      <div className="absolute bottom-[20%] left-[-10%] w-[350px] h-[350px] rounded-full bg-black/5 glow-blob" />
+    <SectionShell
+      id="about"
+      eyebrow="My Story"
+      title="From zero to"
+      accent="founder"
+      className="border-t border-ink/5"
+    >
+      <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
+        {/* Narrative + facts */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={VIEWPORT}
+          transition={{ duration: 0.9, ease: EASE.expo }}
+          className="lg:col-span-5 lg:sticky lg:top-28"
+        >
+          <div className="glass-panel relative overflow-hidden rounded-[2rem] p-8 md:p-10">
+            <div className="aurora-blob blob-violet absolute -right-16 -top-16 h-48 w-48" />
 
-      <div className="w-full max-w-5xl mx-auto z-10">
+            <p className="relative font-serif-accent text-3xl leading-tight text-ink md:text-4xl">
+              A non-traditional path built on high-velocity learning.
+            </p>
 
-        {/* Section Heading */}
-        <div className="flex flex-col items-start text-left mb-16">
-          <span className="text-xs font-bold tracking-widest text-zinc-900 uppercase mb-3 breathe-glow px-3 py-1 rounded-full border border-zinc-900/15 bg-black/5">MY STORY</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight gradient-text-animated uppercase font-sans">
-            FROM ZERO TO FOUNDER
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-zinc-900 via-zinc-400 to-zinc-900 mt-5 rounded-full shadow-[0_0_10px_rgba(9,9,11,0.06)]" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-
-          {/* Left Side: Biography Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ type: "spring", damping: 24, stiffness: 60, mass: 0.9 }}
-            className="lg:col-span-5 flex flex-col space-y-6 text-left"
-          >
-            <div className="glass-card rounded-3xl p-8 border-zinc-900/5 space-y-6 relative overflow-hidden shadow-[0_20px_50px_rgba(9,9,11,0.06)]">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-black/5 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="flex items-center space-x-3">
-                <Award className="w-6 h-6 text-zinc-900" />
-                <span className="text-sm font-bold tracking-wider text-zinc-900 uppercase">ANURAG VERMA</span>
-              </div>
-
-              <h3 className="text-xl font-extrabold text-zinc-900">
-                A non-traditional path built on high-velocity learning.
-              </h3>
-
-              <p className="text-sm text-zinc-700 font-medium leading-relaxed">
-                When I committed to learning code in october 2025, I bypassed traditional sandbox tutorials in favor of building real products. I believe that students deserve better access to global career boosters, which drove me to design and develop OpportunityX.
+            <div className="relative mt-8 space-y-5 text-[15px] leading-relaxed text-ink-soft">
+              <p>
+                When I committed to learning code in october 2025, I bypassed traditional sandbox
+                tutorials in favor of building real products. I believe that students deserve better
+                access to global career boosters, which drove me to design and develop OpportunityX.
               </p>
-
-              <p className="text-sm text-zinc-700 font-medium leading-relaxed">
-                My workflow integrates cutting-edge frontend libraries with fast API microservices. I spend my time engineering responsive layouts, training custom models, and designing sleek user experiences that scale.
+              <p>
+                My workflow integrates cutting-edge frontend libraries with fast API microservices. I
+                spend my time engineering responsive layouts, training custom models, and designing
+                sleek user experiences that scale.
               </p>
-
-              <div className="pt-4 flex items-center space-x-4 border-t border-zinc-900/5 text-xs text-zinc-500">
-                <div>
-                  <span className="block font-bold text-zinc-900 text-sm">2025</span>
-                  <span>Coding Start</span>
-                </div>
-                <div className="w-[1px] h-8 bg-black/10" />
-                <div>
-                  <span className="block font-bold text-zinc-900 text-sm">AI/ML</span>
-                  <span>Core Focus</span>
-                </div>
-                <div className="w-[1px] h-8 bg-black/10" />
-                <div>
-                  <span className="block font-bold text-zinc-900 text-sm">FastAPI + React</span>
-                  <span>Preferred Stack</span>
-                </div>
-              </div>
             </div>
-          </motion.div>
 
-          {/* Right Side: Structured Narrative Timeline */}
-          <motion.div
-            variants={containerVariants}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-            className="lg:col-span-7 grid grid-cols-1 gap-6"
-          >
-            {points.map((point, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="flex items-start space-x-4 p-6 rounded-2xl glass-card border-zinc-900/5 hover:border-zinc-900/15 transition-all duration-300 group shadow-md"
-              >
-                <div className="flex-shrink-0 p-3 rounded-xl bg-black/[0.03] border border-zinc-900/5 group-hover:bg-black/10 group-hover:border-zinc-900/15 transition-colors">
-                  {point.icon}
+            <div className="relative mt-8 flex flex-wrap gap-6 border-t border-ink/5 pt-6">
+              {FACTS.map((f) => (
+                <div key={f.label}>
+                  <span className="block text-lg font-semibold text-ink">{f.value}</span>
+                  <span className="text-xs font-medium text-ink-mute">{f.label}</span>
                 </div>
-                <div className="text-left space-y-1">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between items-start gap-2">
-                    <h4 className="text-base font-bold text-zinc-900 group-hover:text-zinc-900 transition-colors">
-                      {point.title}
-                    </h4>
-                    <span className="text-xs font-semibold text-zinc-900/80 px-2.5 py-0.5 rounded-full bg-black/10 border border-zinc-900/15 uppercase tracking-widest shrink-0">
-                      {point.date}
-                    </span>
-                  </div>
-                  <p className="text-xs md:text-sm text-zinc-700 font-medium leading-relaxed pt-1">
-                    {point.desc}
-                  </p>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Chapter cards */}
+        <motion.div
+          variants={staggerContainer(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={VIEWPORT}
+          className="flex flex-col gap-4 lg:col-span-7"
+        >
+          {CHAPTERS.map(({ icon: Icon, date, title, desc }) => (
+            <motion.div
+              key={title}
+              variants={fadeUp}
+              whileHover={{ y: -4 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+              className="glass-card glass-card-hover group flex items-start gap-5 rounded-3xl p-6"
+            >
+              <div className="flex-shrink-0 rounded-2xl border border-ink/5 bg-white/60 p-3 transition-colors group-hover:border-aurora-violet/30">
+                <Icon className="h-5 w-5 text-aurora-indigo" />
+              </div>
+              <div className="space-y-1.5">
+                <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between">
+                  <h3 className="text-base font-semibold text-ink">{title}</h3>
+                  <span className="w-fit rounded-full border border-ink/8 bg-white/50 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-ink-mute">
+                    {date}
+                  </span>
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-        </div>
-
+                <p className="text-sm leading-relaxed text-ink-mute">{desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-    </section>
+    </SectionShell>
   );
 }

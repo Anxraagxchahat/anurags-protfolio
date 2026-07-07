@@ -1,130 +1,101 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 
+/**
+ * Premium aurora cursor: a soft tinted dot that eases to the pointer, a
+ * lagging glass ring, and a click ripple. Grows over interactive elements.
+ * Desktop / fine-pointer only; hidden entirely on touch or reduced motion.
+ */
 export default function CustomCursor() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  
+  const [enabled] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return fine && !touch && !reduced && window.innerWidth >= 768;
+  });
+
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
+
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Elastic spring physics for main cursor
-  const springConfig = { damping: 30, stiffness: 350, mass: 0.35 };
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const dot = { damping: 30, stiffness: 400, mass: 0.3 };
+  const cursorX = useSpring(mouseX, dot);
+  const cursorY = useSpring(mouseY, dot);
 
-  // Slower, lagging trail spring physics for secondary dot
-  const trailSpringConfig = { damping: 20, stiffness: 120, mass: 0.7 };
-  const trailX = useSpring(cursorX, trailSpringConfig);
-  const trailY = useSpring(cursorY, trailSpringConfig);
+  const ring = { damping: 22, stiffness: 130, mass: 0.6 };
+  const ringX = useSpring(cursorX, ring);
+  const ringY = useSpring(cursorY, ring);
 
   useEffect(() => {
-    // Only enable custom cursor on fine pointer devices, non-touch devices, and screens >= 768px
-    const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-    const isMobileViewport = window.innerWidth < 768;
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!enabled) return undefined;
 
-    if (isTouchDevice || isMobileViewport || !isFinePointer) {
-      setIsVisible(false);
-      return;
-    }
-
-    setIsVisible(true);
-
-    const handleMouseMove = (e) => {
+    const move = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      if (
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        target.getAttribute('role') === 'button'
-      ) {
-        setIsHovered(true);
-      } else {
-        setIsHovered(false);
-      }
+    const over = (e) => {
+      const t = e.target;
+      setHovered(
+        t.tagName === 'A' ||
+          t.tagName === 'BUTTON' ||
+          !!t.closest('a') ||
+          !!t.closest('button') ||
+          t.getAttribute('role') === 'button'
+      );
     };
+    const down = () => setClicked(true);
+    const up = () => setClicked(false);
 
-    const handleMouseDown = () => setIsClicked(true);
-    const handleMouseUp = () => setIsClicked(false);
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseover', handleMouseOver);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
-    
-    // Hide default cursor
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseover', over);
+    window.addEventListener('mousedown', down);
+    window.addEventListener('mouseup', up);
     document.body.classList.add('cursor-none');
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseover', handleMouseOver);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseover', over);
+      window.removeEventListener('mousedown', down);
+      window.removeEventListener('mouseup', up);
       document.body.classList.remove('cursor-none');
     };
-  }, [mouseX, mouseY]);
+  }, [enabled, mouseX, mouseY]);
 
-  if (!isVisible) return null;
+  if (!enabled) return null;
 
   return (
     <>
-      {/* Main Cursor: Glowing White Dot */}
       <motion.div
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-[#09090b] pointer-events-none z-[1000] mix-blend-multiply hidden md:block filter drop-shadow-[0_0_4px_rgba(9,9,11,0.3)]"
-        animate={{
-          scale: isHovered ? 1.8 : 1.0,
-        }}
+        style={{ x: cursorX, y: cursorY, translateX: '-50%', translateY: '-50%' }}
+        animate={{ scale: hovered ? 1.6 : 1 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        className="pointer-events-none fixed left-0 top-0 z-[100000] hidden h-2.5 w-2.5 rounded-full md:block"
+      >
+        <span className="block h-full w-full rounded-full bg-gradient-to-br from-aurora-violet to-aurora-blue" />
+      </motion.div>
+
+      <motion.div
+        style={{ x: ringX, y: ringY, translateX: '-50%', translateY: '-50%' }}
+        animate={{ scale: hovered ? 1.5 : 1, opacity: hovered ? 1 : 0.6 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+        className="pointer-events-none fixed left-0 top-0 z-[99999] hidden h-8 w-8 rounded-full border border-aurora-violet/40 backdrop-blur-[1px] md:block"
       />
 
-      {/* Click expansion ripple effect */}
       <AnimatePresence>
-        {isClicked && (
+        {clicked && (
           <motion.div
-            initial={{ scale: 0.5, opacity: 0.85 }}
-            animate={{ scale: 2.5, opacity: 0 }}
+            initial={{ scale: 0.4, opacity: 0.7 }}
+            animate={{ scale: 2.4, opacity: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            style={{
-              x: cursorX,
-              y: cursorY,
-              translateX: '-50%',
-              translateY: '-50%',
-            }}
-            className="fixed top-0 left-0 w-8 h-8 rounded-full border border-[#09090b] pointer-events-none z-[998] mix-blend-multiply"
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            style={{ x: cursorX, y: cursorY, translateX: '-50%', translateY: '-50%' }}
+            className="pointer-events-none fixed left-0 top-0 z-[99998] h-8 w-8 rounded-full border border-aurora-blue/50"
           />
         )}
       </AnimatePresence>
-
-      {/* Trailing Dot: Glowing White Ring lagging behind */}
-      <motion.div
-        style={{
-          x: trailX,
-          y: trailY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        className="fixed top-0 left-0 w-6 h-6 rounded-full border border-[#09090b]/40 pointer-events-none z-[997] mix-blend-multiply hidden md:block"
-        animate={{
-          scale: isHovered ? 1.5 : 1.0,
-          borderColor: isHovered ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)',
-        }}
-        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-      />
     </>
   );
 }

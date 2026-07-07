@@ -1,353 +1,230 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
-import { ArrowDown, Layers, Sparkles, CheckCircle, Code, Zap } from 'lucide-react';
+import { lazy, Suspense, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowUpRight, ArrowDown, Zap, Layers, Code, Sparkles, CheckCircle } from 'lucide-react';
+import Eyebrow from './ui/Eyebrow';
+import MagneticButton from './ui/MagneticButton';
+import CountUp from './ui/CountUp';
+import TypingText from './ui/TypingText';
+import { staggerContainer, fadeUpBlur, scaleIn, EASE } from '../lib/motion';
+import { useReducedMotion } from '../lib/useReducedMotion';
 
-// Animated counting number component
-function CountUp({ target, suffix = '', duration = 2000 }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+const CrystalCanvas = lazy(() => import('./three/CrystalCanvas'));
 
-  useEffect(() => {
-    if (!isInView) return;
-    const isNumber = !isNaN(target);
-    if (!isNumber) {
-      setCount(target);
-      return;
-    }
-    const num = parseInt(target);
-    let start = 0;
-    const step = Math.ceil(num / (duration / 16));
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= num) {
-        setCount(num);
-        clearInterval(timer);
-      } else {
-        setCount(start);
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [isInView, target, duration]);
+const STATS = [
+  { icon: Layers, label: 'Startups', end: 2, suffix: '+' },
+  { icon: Code, label: 'Projects', end: 5, suffix: '+' },
+  { icon: Sparkles, label: 'Core Stack', text: 'AI/ML' },
+  { icon: CheckCircle, label: 'Status', text: 'Live' },
+];
 
-  return <span ref={ref}>{typeof count === 'number' ? count : count}{suffix}</span>;
-}
+const BADGES = [
+  { emoji: '\u{1F680}', label: 'STARTUP BUILDER', pos: '-top-5 -left-5', delay: 0 },
+  { emoji: '\u26A1', label: '5+ PRODUCTS', pos: '-bottom-4 -right-5', delay: 1 },
+  { emoji: '\u{1F525}', label: 'AI/ML', pos: 'top-6 -right-7', delay: 0.5 },
+];
 
-// Typing text animation
-function TypingText({ text, speed = 50, delay = 1500 }) {
-  const [displayed, setDisplayed] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          setDisplayed(text.slice(0, i + 1));
-          i++;
-        } else {
-          clearInterval(interval);
-          // Blink cursor then hide
-          setTimeout(() => setShowCursor(false), 2000);
-        }
-      }, speed);
-      return () => clearInterval(interval);
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [text, speed, delay]);
-
+/** Bright CSS fallback orb for reduced-motion / low-power / no-WebGL. */
+function CrystalFallback() {
   return (
-    <span>
-      {displayed}
-      {showCursor && <span className="inline-block w-[2px] h-[1em] bg-zinc-900 ml-1 animate-pulse align-middle" />}
-    </span>
+    <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+      <div
+        className="h-64 w-64 rounded-full opacity-80 blur-[2px]"
+        style={{
+          background:
+            'radial-gradient(circle at 35% 30%, #ffffff, #cfd6ff 30%, #8A7CFF 62%, #5FD0E6 90%)',
+          boxShadow: '0 30px 80px rgba(138,124,255,0.35)',
+        }}
+      />
+    </div>
   );
 }
 
 export default function Hero() {
-  const heroRef = useRef(null);
+  const sectionRef = useRef(null);
+  const { reducedMotion, lowPower, webgl } = useReducedMotion();
+  const useFallback = reducedMotion || lowPower || !webgl;
 
-  const x = useMotionValue(0.5);
-  const y = useMotionValue(0.5);
-
-  const tiltSpringConfig = { damping: 25, stiffness: 150 };
-  const rotateX = useSpring(useTransform(y, [0, 1], [12, -12]), tiltSpringConfig);
-  const rotateY = useSpring(useTransform(x, [0, 1], [-12, 12]), tiltSpringConfig);
-
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width);
-    y.set((e.clientY - rect.top) / rect.height);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0.5);
-    y.set(0.5);
-  };
-
-  const containerVariants = {
-    initial: {},
-    animate: {
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.8,
-      }
-    }
-  };
-
-  const fadeUpVariants = {
-    initial: { y: 50, opacity: 0, filter: 'blur(10px)' },
-    animate: {
-      y: 0,
-      opacity: 1,
-      filter: 'blur(0px)',
-      transition: { type: "spring", damping: 20, stiffness: 60, mass: 0.8 }
-    }
-  };
-
-  const scaleInVariants = {
-    initial: { scale: 0.8, opacity: 0 },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      transition: { type: "spring", damping: 15, stiffness: 80, delay: 0.3 }
-    }
-  };
-
-  const stats = [
-    { value: "2", label: "Startups", icon: <Layers className="w-4 h-4 text-zinc-900" />, suffix: "+" },
-    { value: "5", label: "Projects", icon: <Code className="w-4 h-4 text-zinc-900" />, suffix: "+" },
-    { value: "AI/ML", label: "Core Stack", icon: <Sparkles className="w-4 h-4 text-zinc-900" />, suffix: "" },
-    { value: "Live", label: "In Production", icon: <CheckCircle className="w-4 h-4 text-zinc-900" />, suffix: "" }
-  ];
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  });
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, reducedMotion ? 0 : 120]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reducedMotion ? 1 : 0]);
 
   return (
     <section
       id="home"
-      ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center pt-28 pb-16 px-4 overflow-hidden"
+      ref={sectionRef}
+      className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-16 pt-32 md:pt-28"
     >
-
-
-      {/* Background soft backlights */}
-      <div className="absolute top-[20%] left-[20%] w-[350px] h-[350px] rounded-full bg-black/5 glow-blob" />
-      <div className="absolute bottom-[20%] right-[10%] w-[400px] h-[400px] rounded-full bg-black/5 glow-blob" />
-
-      <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
-
-        {/* Left Column: Text & Content */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8"
+      >
+        {/* Left: copy */}
         <motion.div
-          variants={containerVariants}
-          initial="initial"
-          animate="animate"
-          className="lg:col-span-7 flex flex-col items-start text-left space-y-6 lg:pr-4"
+          variants={staggerContainer(0.12, 0.7)}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col items-start gap-7 text-left lg:col-span-7"
         >
-          {/* Animated Badge */}
+          <motion.div variants={fadeUpBlur}>
+            <Eyebrow animate={false}>Founder @ OpportunityX</Eyebrow>
+          </motion.div>
+
+          <motion.h1
+            variants={fadeUpBlur}
+            className="text-6xl font-semibold leading-[0.9] tracking-tightest sm:text-7xl lg:text-8xl xl:text-[8.5rem]"
+          >
+            <span className="block text-ink">ANURAG</span>
+            <span className="aurora-text block">VERMA</span>
+          </motion.h1>
+
           <motion.div
-            variants={fadeUpVariants}
-            className="flex items-center space-x-2 px-4 py-2 rounded-full glass-card border-zinc-900/5 shadow-[0_4px_12px_rgba(0,0,0,0.2)] text-xs font-semibold tracking-wider text-zinc-900 breathe-glow"
+            variants={fadeUpBlur}
+            className="max-w-xl text-lg font-medium leading-snug text-ink-soft md:text-xl"
           >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-900 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-zinc-900"></span>
+            <span className="font-serif-accent text-2xl text-ink md:text-[1.7rem]">
+              Building products for students
             </span>
-            <span className="uppercase">Founder @ OpportunityX</span>
+            <br />
+            <TypingText text="with AI/ML & Full Stack Web." className="text-ink-soft" />
           </motion.div>
 
-          {/* Glitch + Animated Gradient Name */}
-          <motion.div variants={fadeUpVariants} className="space-y-1">
-            <h1
-              className="glitch-text text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[0.9] text-zinc-900 uppercase font-sans"
-              data-text="ANURAG"
-            >
-              ANURAG
-            </h1>
-            <h1 className="gradient-text-animated text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[0.9] uppercase font-sans py-1">
-              VERMA
-            </h1>
-          </motion.div>
-
-          {/* Typing Subtitle */}
-          <motion.h2
-            variants={fadeUpVariants}
-            className="text-lg md:text-xl font-black tracking-wide text-zinc-950 uppercase min-h-[2em]"
-          >
-            <TypingText text="Building products for students with AI/ML & Full Stack Web." speed={35} delay={1800} />
-          </motion.h2>
-
-          {/* Description with reveal */}
           <motion.p
-            variants={fadeUpVariants}
-            className="text-sm md:text-base text-zinc-800 font-medium leading-relaxed max-w-xl"
+            variants={fadeUpBlur}
+            className="max-w-xl text-pretty text-[15px] leading-relaxed text-ink-mute md:text-base"
           >
-            Started coding in <span className="text-zinc-950 font-black">october 2025</span>. Currently exploring AI/ML, full stack development, and building <span className="text-zinc-950 font-black">OpportunityX</span> — a platform helping students discover hackathons, internships, jobs, scholarships, and opportunities in one place.
+            Started coding in <strong className="font-semibold text-ink">october 2025</strong>. Currently
+            exploring AI/ML, full stack development, and building{' '}
+            <strong className="font-semibold text-ink">OpportunityX</strong>, a platform helping
+            students discover hackathons, internships, jobs, scholarships, and opportunities in one
+            place.
           </motion.p>
 
-          {/* CTA Buttons with neon effects */}
-          <motion.div
-            variants={fadeUpVariants}
-            className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto"
-          >
-            <a
+          <motion.div variants={fadeUpBlur} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <MagneticButton
               href="#projects"
-              className="group relative px-8 py-3.5 bg-gradient-to-r from-zinc-900 to-zinc-700 hover:brightness-105 text-white font-bold text-sm rounded-full transition-all duration-300 shadow-[0_4px_30px_rgba(255,255,255,0.15)] text-center tracking-wider uppercase overflow-hidden"
+              variant="primary"
+              disabled={reducedMotion}
+              icon={<Zap className="h-4 w-4" />}
             >
-              {/* Animated shine sweep */}
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-              <span className="relative flex items-center justify-center gap-2">
-                <Zap className="w-4 h-4 text-white" />
-                Explore Projects
-              </span>
-            </a>
-            <a
+              Explore Projects
+            </MagneticButton>
+            <MagneticButton
               href="https://opportunity-x.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="neon-border px-8 py-3.5 glass-card hover:bg-white/[0.08] hover:border-zinc-900/15 text-zinc-900 font-semibold text-sm rounded-full transition-all duration-300 text-center border-zinc-900/10 tracking-wider uppercase"
+              variant="secondary"
+              disabled={reducedMotion}
+              icon={<ArrowUpRight className="h-4 w-4" />}
             >
               View OpportunityX
-            </a>
+            </MagneticButton>
           </motion.div>
 
-          {/* Dynamic Stats Grid with CountUp */}
+          {/* Stats */}
           <motion.div
-            variants={fadeUpVariants}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pt-6 border-t border-zinc-900/5"
+            variants={fadeUpBlur}
+            className="grid w-full grid-cols-2 gap-3 border-t border-ink/[0.06] pt-7 md:grid-cols-4"
           >
-            {stats.map((stat, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ scale: 1.05, y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="flex flex-col p-3.5 rounded-2xl glass-card border-zinc-900/5 hover:border-zinc-900/15 transition-colors neon-border cursor-default"
+            {STATS.map(({ icon: Icon, label, end, suffix, text }) => (
+              <div
+                key={label}
+                className="glass-card glass-card-hover flex flex-col gap-1.5 rounded-2xl p-4"
               >
-                <div className="flex items-center space-x-2 mb-1.5">
-                  {stat.icon}
-                  <span className="text-zinc-400 text-[10px] tracking-wider uppercase font-semibold">{stat.label}</span>
+                <div className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 text-aurora-indigo" />
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-ink-mute">
+                    {label}
+                  </span>
                 </div>
-                <span className="text-xl md:text-2xl font-black tracking-tight text-zinc-900">
-                  <CountUp target={stat.value} suffix={stat.suffix} />
+                <span className="text-2xl font-semibold tracking-tight text-ink">
+                  {text ? text : <CountUp end={end} suffix={suffix} />}
                 </span>
-              </motion.div>
+              </div>
             ))}
           </motion.div>
-
         </motion.div>
 
-        {/* Right Column: Premium Founder Portrait with 3D Tilt */}
+        {/* Right: crystal + floating photo card */}
         <motion.div
-          variants={scaleInVariants}
-          initial="initial"
-          animate="animate"
-          className="lg:col-span-5 flex justify-center items-center relative"
+          variants={scaleIn}
+          initial="hidden"
+          animate="show"
+          className="relative flex items-center justify-center lg:col-span-5"
           style={{ perspective: 1200 }}
         >
-          {/* Accent light rings behind the portrait */}
-          <div className="absolute w-[280px] md:w-[350px] h-[280px] md:h-[350px] rounded-full bg-black/5 animate-pulse-slow filter blur-[60px] pointer-events-none" />
-          <div className="absolute w-[240px] md:w-[300px] h-[240px] md:h-[300px] rounded-full bg-black/5 animate-glow-slow filter blur-[40px] pointer-events-none" />
+          {/* Ambient 3D crystal behind the card */}
+          <div className="pointer-events-none absolute inset-0 -z-0 scale-125">
+            {useFallback ? (
+              <CrystalFallback />
+            ) : (
+              <Suspense fallback={<CrystalFallback />}>
+                <CrystalCanvas reduced={reducedMotion} />
+              </Suspense>
+            )}
+          </div>
 
-          {/* Premium styled floating card */}
+          {/* Floating glass ID card */}
           <motion.div
-            animate={{
-              y: [0, -10, 0]
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-              rotateX,
-              rotateY,
-              transformStyle: "preserve-3d",
-              transformPerspective: 1200
-            }}
-            className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[3/4] rounded-3xl overflow-visible glass-card border-zinc-900/15 p-3.5 shadow-[0_24px_60px_rgba(0,0,0,0.6)] group cursor-pointer select-none"
+            animate={reducedMotion ? undefined : { y: [0, -12, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            className="group relative aspect-[3/4] w-[280px] sm:w-[320px] md:w-[360px]"
           >
-            {/* Hover light highlight effect */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl" />
+            <div className="glass-panel relative h-full w-full rounded-[2rem] p-3.5 shadow-glass-xl">
+              {BADGES.map((b) => (
+                <motion.div
+                  key={b.label}
+                  animate={reducedMotion ? undefined : { y: [0, -6, 0] }}
+                  transition={{ duration: 4 + b.delay, repeat: Infinity, ease: 'easeInOut', delay: b.delay }}
+                  className={`absolute z-20 flex items-center gap-1.5 rounded-xl bg-white/80 px-3 py-2 text-[9px] font-bold text-ink shadow-glass backdrop-blur-md ${b.pos}`}
+                >
+                  <span>{b.emoji}</span>
+                  <span className="tracking-wide">{b.label}</span>
+                </motion.div>
+              ))}
 
-            {/* 3D Floating Tag 1 (Top Left) */}
-            <motion.div
-              animate={{ y: [0, -5, 0], rotate: [-1, 1, -1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-5 -left-6 px-3.5 py-2 rounded-xl bg-zinc-950 border border-zinc-900/10 text-[9px] font-black text-white shadow-[0_10px_20px_rgba(0,0,0,0.08)] flex items-center space-x-1.5"
-              style={{ transform: "translateZ(65px)" }}
-            >
-              <span>🚀</span>
-              <span>STARTUP BUILDER</span>
-            </motion.div>
-
-            {/* 3D Floating Tag 2 (Bottom Right) */}
-            <motion.div
-              animate={{ y: [0, 5, 0], rotate: [1, -1, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute -bottom-3 -right-6 px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-900/10 text-[9px] font-black text-white shadow-[0_10px_20px_rgba(0,0,0,0.08)] flex items-center space-x-1.5"
-              style={{ transform: "translateZ(55px)" }}
-            >
-              <span>⚡</span>
-              <span>5+ PRODUCTS</span>
-            </motion.div>
-
-            {/* 3D Floating Tag 3 (Top Right) - NEW */}
-            <motion.div
-              animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute -top-2 -right-4 px-3 py-1.5 rounded-lg bg-zinc-950 border border-zinc-900/10 text-[8px] font-black text-white shadow-[0_10px_20px_rgba(0,0,0,0.08)] flex items-center space-x-1"
-              style={{ transform: "translateZ(70px)" }}
-            >
-              <span>🔥</span>
-              <span>AI/ML</span>
-            </motion.div>
-
-            {/* The Portrait Container */}
-            <div className="relative w-full h-full rounded-2xl overflow-hidden bg-white" style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
-              <img
-                src="/chahat.jpg"
-                alt="Anurag Verma"
-                className="w-full h-full object-cover object-center filter grayscale contrast-[1.1] brightness-[0.88] hover:grayscale-0 hover:contrast-100 hover:brightness-100 transition-all duration-750 ease-out scale-105 group-hover:scale-100"
-                style={{ transform: "translateZ(15px)" }}
-              />
-              {/* Dual-tone Dark Vignette Gradient Layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-80" />
-              <div className="absolute inset-0 bg-[#030712]/10 mix-blend-color" />
-
-              {/* Cinematic Bottom Tag */}
-              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl backdrop-blur-md bg-white/40 border border-zinc-900/5 text-left flex flex-col justify-start" style={{ transform: "translateZ(35px)" }}>
-                <span className="text-[10px] text-zinc-900 font-bold tracking-widest uppercase mb-0.5">ANURAG VERMA</span>
-                <span className="text-[9px] text-zinc-500 font-light tracking-wide">FOUNDER & DEVELOPER</span>
+              <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-paper-soft">
+                <img
+                  src="/chahat.jpg"
+                  alt="Anurag Verma"
+                  width="360"
+                  height="480"
+                  loading="eager"
+                  className="h-full w-full scale-105 object-cover object-center grayscale-[0.35] transition-all duration-700 ease-out group-hover:scale-100 group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-transparent to-transparent" />
+                <div className="absolute inset-x-3 bottom-3 flex flex-col rounded-xl border border-white/60 bg-white/60 p-3 backdrop-blur-md">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-ink">
+                    Anurag Verma
+                  </span>
+                  <span className="text-[9px] font-medium tracking-wide text-ink-mute">
+                    Founder &amp; Developer
+                  </span>
+                </div>
               </div>
             </div>
-
-            {/* Glowing borders around portrait */}
-            <div className="absolute inset-0 rounded-3xl border border-zinc-900/10 pointer-events-none group-hover:border-zinc-900/15 transition-colors duration-500" style={{ transform: "translateZ(10px)" }} />
           </motion.div>
         </motion.div>
+      </motion.div>
 
-      </div>
-
-      {/* Slide down mouse scroll indicator */}
-      <a
+      {/* Scroll cue */}
+      <motion.a
         href="#about"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-1.5 opacity-40 hover:opacity-100 transition-opacity cursor-pointer hidden md:flex"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 2, duration: 1, ease: EASE.expo }}
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-ink-mute transition-opacity hover:opacity-100 md:flex"
       >
-        <span className="text-[10px] font-semibold tracking-widest text-zinc-900 uppercase">SCROLL</span>
-        <motion.div
-          animate={{
-            y: [0, 6, 0]
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+        <motion.span
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ArrowDown className="w-4 h-4 text-zinc-900" />
-        </motion.div>
-      </a>
+          <ArrowDown className="h-4 w-4" />
+        </motion.span>
+      </motion.a>
     </section>
   );
 }

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, ArrowRight, MessageSquare } from 'lucide-react';
+import SectionShell from './ui/SectionShell';
+import { VIEWPORT, EASE } from '../lib/motion';
 
 const Github = (props) => (
   <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -17,6 +19,15 @@ const Linkedin = (props) => (
   </svg>
 );
 
+const SOCIALS = [
+  { name: 'GitHub', url: 'https://github.com/Anxraagxchahat', icon: <Github className="h-5 w-5" />, label: 'View Codebases' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/anurag-verma-388238246/', icon: <Linkedin className="h-5 w-5" />, label: "Let's Network" },
+  { name: 'Email', url: 'mailto:anurag@opportunityx.co.in', icon: <Mail className="h-5 w-5" />, label: 'Direct Drop' },
+];
+
+const FIELD_CLASS =
+  'w-full rounded-xl border border-ink/8 bg-white/50 px-4 py-3 text-sm text-ink placeholder-ink-mute outline-none transition-all duration-300 focus:border-aurora-violet/50 focus:bg-white/80 focus:ring-2 focus:ring-aurora-violet/15';
+
 export default function Contact() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -27,250 +38,206 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
-    
+
     setIsSubmitting(true);
     setError('');
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/vermakumaranurag@gmail.com", {
-        method: "POST",
+      const response = await fetch('https://formsubmit.co/ajax/vermakumaranurag@gmail.com', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           name: formState.name,
           email: formState.email,
           message: formState.message,
           _subject: `New Portfolio Message from ${formState.name}`,
-          _captcha: "false"
-        })
+          _captcha: 'false',
+        }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        if (data.success === "true") {
+        if (data.success === 'true') {
           setSubmitted(true);
           setActivationRequired(false);
           setFormState({ name: '', email: '', message: '' });
           setTimeout(() => {
             setSubmitted(false);
           }, 5000);
-        } else if (data.message && (data.message.includes("Activation") || data.message.includes("activate"))) {
+        } else if (data.message && (data.message.includes('Activation') || data.message.includes('activate'))) {
           setSubmitted(true);
           setActivationRequired(true);
           setFormState({ name: '', email: '', message: '' });
         } else {
-          setError(data.message || "Failed to send message. Please try again.");
+          setError(data.message || 'Failed to send message. Please try again.');
         }
       } else {
-        setError("Failed to send message. Please try again or email directly.");
+        setError('Failed to send message. Please try again or email directly.');
       }
     } catch (err) {
       console.error(err);
-      setError("An error occurred. Please check your connection and try again.");
+      setError('An error occurred. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const socials = [
-    {
-      name: "GitHub",
-      url: "https://github.com/Anxraagxchahat",
-      icon: <Github className="w-5 h-5" />,
-      color: "hover:text-zinc-900 hover:border-zinc-900/20 hover:bg-black/[0.04]",
-      label: "View Codebases"
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/anurag-verma-388238246/",
-      icon: <Linkedin className="w-5 h-5 text-zinc-900" />,
-      color: "hover:text-zinc-900 hover:border-zinc-900/20 hover:bg-black/[0.04]",
-      label: "Let's Network"
-    },
-    {
-      name: "Email",
-      url: "mailto:vermakumaranurag@gmail.com",
-      icon: <Mail className="w-5 h-5 text-zinc-900" />,
-      color: "hover:text-zinc-900 hover:border-zinc-900/20 hover:bg-black/[0.04]",
-      label: "Direct Drop"
-    }
-  ];
-
   return (
-    <section id="contact" className="relative pt-24 pb-60 px-4 overflow-hidden border-t border-zinc-900/5 bg-transparent">
-      {/* Background ambient backlights */}
-      <div className="absolute top-[20%] right-[-10%] w-[380px] h-[380px] rounded-full bg-black/5 glow-blob" />
-      <div className="absolute bottom-[20%] left-[-10%] w-[380px] h-[380px] rounded-full bg-black/5 glow-blob" />
-
-      <div className="w-full max-w-5xl mx-auto z-10">
-
-        {/* Section Heading */}
-        <div className="flex flex-col items-start text-left mb-16">
-          <span className="text-xs font-bold tracking-widest text-zinc-900 uppercase mb-2">CONNECT</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-zinc-900 uppercase font-sans">
-            START A CONVERSATION
-          </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-zinc-900 via-zinc-400 to-zinc-900 mt-4 rounded-full shadow-[0_0_10px_rgba(9,9,11,0.06)]" />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
-
-          {/* Left Column: Magnet connects and context */}
-          <div className="lg:col-span-5 flex flex-col justify-between text-left space-y-8">
-            <div className="space-y-4">
-              <h3 className="text-xl md:text-2xl font-bold text-zinc-900 tracking-wide">
-                Let's build something game-changing.
-              </h3>
-              <p className="text-sm text-zinc-700 font-medium leading-relaxed">
-                Whether you want to discuss AI/ML microservices, full-stack architectures, student opportunity frameworks, or collaborate on OpportunityX, my inbox is always open.
-              </p>
-            </div>
-
-            {/* Premium Social Links Grid */}
-            <div className="flex flex-col space-y-4 w-full">
-              <span className="text-[10px] text-zinc-900 font-black tracking-widest uppercase mb-1">FOUNDER CONNECTS</span>
-              {socials.map((soc, idx) => (
-                <a
-                  key={idx}
-                  href={soc.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between p-4 rounded-2xl glass-card border-zinc-900/5 transition-all duration-300 group shadow-sm ${soc.color}`}
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="p-3 rounded-xl bg-black/[0.02] border border-zinc-900/5 group-hover:bg-black/[0.06] transition-colors">
-                      {soc.icon}
-                    </div>
-                    <div className="text-left">
-                      <div className="text-sm font-bold text-zinc-900">{soc.name}</div>
-                      <div className="text-xs text-zinc-600 font-medium">{soc.label}</div>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-400 group-hover:translate-x-1 group-hover:text-zinc-900 transition-all duration-200" />
-                </a>
-              ))}
-            </div>
-
-            {/* Micro Quote */}
-            <div className="hidden lg:flex items-center space-x-3 text-xs text-zinc-700 font-bold">
-              <MessageSquare className="w-4 h-4 text-zinc-900" />
-              <span>Response time: Typically under 4 hours.</span>
-            </div>
+    <SectionShell
+      id="contact"
+      eyebrow="Connect"
+      title="Start a"
+      accent="conversation"
+      className="border-t border-ink/5"
+    >
+      <div className="grid grid-cols-1 items-stretch gap-12 lg:grid-cols-12">
+        <div className="flex flex-col justify-between gap-8 lg:col-span-5">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold tracking-tight text-ink">
+              Let&apos;s build something game-changing.
+            </h3>
+            <p className="text-[15px] leading-relaxed text-ink-mute">
+              Whether you want to discuss AI/ML microservices, full-stack architectures, student
+              opportunity frameworks, or collaborate on OpportunityX, my inbox is always open.
+            </p>
           </div>
 
-          {/* Right Column: Premium Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex"
-          >
-            <div className="w-full glass-card rounded-3xl p-6 md:p-8 border-zinc-900/10 shadow-[0_20px_50px_rgba(9,9,11,0.06)] flex flex-col justify-between">
-
-              {submitted ? (
-                <div className="flex-1 flex flex-col items-center justify-center space-y-4 py-12 text-center">
-                  <div className="w-16 h-16 rounded-full bg-black/10 border border-zinc-900/15 flex items-center justify-center text-zinc-900 text-2xl shadow-[0_0_20px_rgba(9,9,11,0.04)] animate-bounce">
-                    ✓
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-ink-mute">
+              Founder Connects
+            </span>
+            {SOCIALS.map((soc) => (
+              <a
+                key={soc.name}
+                href={soc.url}
+                target={soc.url.startsWith('mailto:') ? undefined : '_blank'}
+                rel={soc.url.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+                className="group flex items-center justify-between rounded-2xl glass-card glass-card-hover p-4"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="rounded-xl border border-ink/5 bg-white/60 p-3 text-ink-soft transition-colors group-hover:text-aurora-indigo">
+                    {soc.icon}
+                  </span>
+                  <div>
+                    <div className="text-sm font-semibold text-ink">{soc.name}</div>
+                    <div className="text-xs text-ink-mute">{soc.label}</div>
                   </div>
-                  {activationRequired ? (
-                    <>
-                      <h4 className="text-lg font-bold text-zinc-900">Activation Required!</h4>
-                      <p className="text-xs text-zinc-700 font-medium max-w-xs leading-relaxed">
-                        FormSubmit has sent an activation email to <strong className="text-zinc-900">vermakumaranurag@gmail.com</strong>.
-                        Please check your inbox (including spam) and click the <strong className="text-zinc-900">"Activate Form"</strong> link to start receiving messages.
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSubmitted(false);
-                          setActivationRequired(false);
-                        }}
-                        className="mt-2 px-4 py-1.5 glass-card text-xs font-semibold rounded-lg text-zinc-900 hover:bg-black/10 transition-colors"
-                      >
-                        Okay, got it
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <h4 className="text-lg font-bold text-zinc-900">Message Transmitted!</h4>
-                      <p className="text-xs text-zinc-700 font-medium max-w-xs leading-relaxed">
-                        Thank you! Anurag will review your message and reach out shortly.
-                      </p>
-                    </>
-                  )}
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="flex-1 flex flex-col space-y-6 text-left">
+                <ArrowRight className="h-4 w-4 text-ink-mute transition-all duration-200 group-hover:translate-x-1 group-hover:text-aurora-indigo" />
+              </a>
+            ))}
+          </div>
 
-                  {/* Name field */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-900 tracking-wider uppercase">Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={formState.name}
-                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      placeholder="e.g. Elon Musk"
-                      className="w-full px-4 py-3 rounded-xl bg-black/[0.01] border border-zinc-900/5 focus:border-zinc-900/30 focus:ring-1 focus:ring-zinc-900/10 text-zinc-900 placeholder-zinc-400 text-sm outline-none transition-all duration-300"
-                    />
-                  </div>
-
-                  {/* Email field */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-900 tracking-wider uppercase">Email Address</label>
-                    <input
-                      type="email"
-                      required
-                      value={formState.email}
-                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      placeholder="name@company.com"
-                      className="w-full px-4 py-3 rounded-xl bg-black/[0.01] border border-zinc-900/5 focus:border-zinc-900/30 focus:ring-1 focus:ring-zinc-900/10 text-zinc-900 placeholder-zinc-400 text-sm outline-none transition-all duration-300"
-                    />
-                  </div>
-
-                  {/* Message field */}
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-zinc-900 tracking-wider uppercase">Your Message</label>
-                    <textarea
-                      required
-                      rows={5}
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Tell me about your product requirements..."
-                      className="w-full px-4 py-3 rounded-xl bg-black/[0.01] border border-zinc-900/5 focus:border-zinc-900/30 focus:ring-1 focus:ring-zinc-900/10 text-zinc-900 placeholder-zinc-400 text-sm outline-none transition-all duration-300 resize-none"
-                    />
-                  </div>
-
-                  {error && (
-                    <div className="text-xs text-zinc-900 font-semibold tracking-wide bg-black/5 border border-zinc-900/10 p-3 rounded-xl">
-                      {error}
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex items-center justify-center space-x-2 py-3.5 w-full bg-gradient-to-r from-zinc-900 to-zinc-700 hover:brightness-95 disabled:opacity-50 text-white font-extrabold text-sm rounded-xl transition-all duration-300 shadow-[0_4px_20px_rgba(9,9,11,0.08)] cursor-pointer disabled:cursor-not-allowed"
-                  >
-                    <span>{isSubmitting ? 'Transmitting...' : 'Transmit Message'}</span>
-                    {!isSubmitting && <Send className="w-4 h-4 text-white" />}
-                  </button>
-
-                </form>
-              )}
-
-            </div>
-          </motion.div>
-
+          <div className="hidden items-center gap-3 text-xs font-medium text-ink-mute lg:flex">
+            <MessageSquare className="h-4 w-4 text-aurora-indigo" />
+            <span>Response time: Typically under 4 hours.</span>
+          </div>
         </div>
 
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={VIEWPORT}
+          transition={{ duration: 0.8, ease: EASE.expo }}
+          className="lg:col-span-7"
+        >
+          <div className="glass-panel flex h-full flex-col justify-center rounded-[2rem] p-6 md:p-8">
+            {submitted ? (
+              <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full text-2xl text-white" style={{ background: 'var(--rift-gradient)' }}>
+                  {'✓'}
+                </div>
+                {activationRequired ? (
+                  <>
+                    <h4 className="text-lg font-semibold text-ink">Activation Required!</h4>
+                    <p className="max-w-xs text-xs leading-relaxed text-ink-mute">
+                      FormSubmit has sent an activation email to{' '}
+                      <strong className="text-ink">vermakumaranurag@gmail.com</strong>. Please check
+                      your inbox (including spam) and click the{' '}
+                      <strong className="text-ink">Activate Form</strong> link to start receiving
+                      messages.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setActivationRequired(false);
+                      }}
+                      className="mt-2 rounded-lg glass-card px-4 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-white/80"
+                    >
+                      Okay, got it
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h4 className="text-lg font-semibold text-ink">Message Transmitted!</h4>
+                    <p className="max-w-xs text-xs leading-relaxed text-ink-mute">
+                      Thank you! Anurag will review your message and reach out shortly.
+                    </p>
+                  </>
+                )}
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-ink-soft">Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                    placeholder="e.g. Elon Musk"
+                    className={FIELD_CLASS}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-ink-soft">Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    value={formState.email}
+                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    placeholder="name@company.com"
+                    className={FIELD_CLASS}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold uppercase tracking-wider text-ink-soft">Your Message</label>
+                  <textarea
+                    required
+                    rows={5}
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    placeholder="Tell me about your product requirements..."
+                    className={`${FIELD_CLASS} resize-none`}
+                  />
+                </div>
+
+                {error && (
+                  <div className="rounded-xl border border-ink/10 bg-white/50 p-3 text-xs font-medium text-ink">
+                    {error}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(99,102,241,0.28)] transition-all duration-300 hover:shadow-[0_16px_40px_rgba(99,102,241,0.4)] disabled:opacity-50"
+                  style={{ background: 'var(--rift-gradient)' }}
+                >
+                  <span>{isSubmitting ? 'Transmitting...' : 'Transmit Message'}</span>
+                  {!isSubmitting && <Send className="h-4 w-4" />}
+                </button>
+              </form>
+            )}
+          </div>
+        </motion.div>
       </div>
-
-
-    </section>
+    </SectionShell>
   );
 }
