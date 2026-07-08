@@ -187,7 +187,7 @@ export default function Hero() {
 
               <div className="relative h-full w-full overflow-hidden rounded-[1.4rem] bg-paper-soft">
                 <img
-                  src="/chahat.jpg"
+                  src="/anurag.jpg"
                   alt="Anurag Verma"
                   width="360"
                   height="480"
